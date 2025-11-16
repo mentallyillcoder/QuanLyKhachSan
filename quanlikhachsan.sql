@@ -1,0 +1,128 @@
+﻿IF DB_ID('QuanLyKhachSan') 
+BEGIN
+    ALTER DATABASE QuanLyKhachSan SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE QuanLyKhachSan;
+END
+GO
+
+CREATE DATABASE QuanLyKhachSan;
+GO
+
+USE QuanLyKhachSan;
+GO
+
+
+
+CREATE TABLE LOAIPHONG (
+    IDLoaiPhong INT IDENTITY(1,1) PRIMARY KEY,
+    TenLoaiPhong NVARCHAR(100) ,
+    DonGia DECIMAL(18, 0) ,
+    LoaiGiuong NVARCHAR(50)
+);
+
+CREATE TABLE PHONG (
+    IDPhong VARCHAR(10) PRIMARY KEY,
+    TenPhong NVARCHAR(100) ,
+    IDLoaiPhong INT NOT NULL,
+    TrangThai NVARCHAR(50) NOT NULL CHECK (TrangThai IN (N'Trống', N'Đang thuê', N'Đang dọn dẹp')),
+    CONSTRAINT FK_PHONG_LOAIPHONG FOREIGN KEY (IDLoaiPhong) REFERENCES LOAIPHONG(IDLoaiPhong)
+);
+
+CREATE TABLE KHACHHANG (
+    IDKhachHang INT IDENTITY(1,1) PRIMARY KEY,
+    HoTen NVARCHAR(100) NOT NULL,
+    CCCD VARCHAR(12) NOT NULL UNIQUE,
+    SoDienThoai VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE TAIKHOAN (
+    Username VARCHAR(50) PRIMARY KEY,
+    Password VARCHAR(100) NOT NULL,
+    HoTen NVARCHAR(100) NOT NULL,
+    LoaiTaiKhoan NVARCHAR(50) NOT NULL CHECK (LoaiTaiKhoan IN (N'Quản lý', N'Nhân viên'))
+);
+
+CREATE TABLE DICHVU (
+    IDDichVu INT IDENTITY(1,1) PRIMARY KEY,
+    TenDichVu NVARCHAR(100) NOT NULL,
+    DonGia DECIMAL(18, 0) NOT NULL
+);
+
+CREATE TABLE PHIEUDATPHONG (
+    IDPhieuDat INT IDENTITY(1,1) PRIMARY KEY,
+    IDKhachHang INT NOT NULL,
+    IDPhong VARCHAR(10) NOT NULL,
+    NgayCheckIn DATETIME NOT NULL,
+    NgayCheckOut DATETIME,
+    SoNguoi INT,
+    TongTienHoaDon DECIMAL(18, 0),
+    TrangThai NVARCHAR(50) NOT NULL CHECK (TrangThai IN (N'Mới đặt', N'Đã check-in', N'Đã check-out', N'Đã hủy')),
+    CONSTRAINT FK_PHIEUDATPHONG_KHACHHANG FOREIGN KEY (IDKhachHang) REFERENCES KHACHHANG(IDKhachHang),
+    CONSTRAINT FK_PHIEUDATPHONG_PHONG FOREIGN KEY (IDPhong) REFERENCES PHONG(IDPhong)
+);
+
+CREATE TABLE HOADON (
+    IDHoaDon INT IDENTITY(1,1) PRIMARY KEY,
+    IDPhieuDat INT NOT NULL,
+    NgayThanhToan DATETIME NOT NULL,
+    TongTien DECIMAL(18, 0) NOT NULL,
+    CONSTRAINT FK_HOADON_PHIEUDATPHONG FOREIGN KEY (IDPhieuDat) REFERENCES PHIEUDATPHONG(IDPhieuDat)
+);
+
+
+CREATE TABLE CHITIET_DICHVU (
+    IDChiTietDV INT IDENTITY(1,1) PRIMARY KEY,
+    IDPhieuDat INT NOT NULL,
+    IDDichVu INT NOT NULL,
+    SoLuong INT NOT NULL,
+    ThanhTien DECIMAL(18, 0) NOT NULL,
+    CONSTRAINT FK_CHITIET_PHIEUDATPHONG FOREIGN KEY (IDPhieuDat) REFERENCES PHIEUDATPHONG(IDPhieuDat),
+    CONSTRAINT FK_CHITIET_DICHVU FOREIGN KEY (IDDichVu) REFERENCES DICHVU(IDDichVu)
+);
+GO
+
+
+
+INSERT INTO LOAIPHONG (TenLoaiPhong, DonGia, LoaiGiuong) VALUES
+(N'Standard', 500000, N'Giường Đơn'),
+(N'Deluxe', 800000, N'Giường Đôi'),
+(N'VIP', 1200000, N'Giường King');
+
+INSERT INTO PHONG (IDPhong, TenPhong, IDLoaiPhong, TrangThai) VALUES
+('P101', N'Phòng 101 Standard Giường Đơn', 1, N'Trống'),
+('P102', N'Phòng 102 Standard Giường Đơn', 1, N'Trống'), 
+('P201', N'Phòng 201 Deluxe Giường Đôi', 2, N'Trống'),
+('P202', N'Phòng 202 Deluxe Giường Đôi', 2, N'Trống'),
+('P301', N'Phòng 301 VIP Giường King', 3, N'Trống');
+
+INSERT INTO KHACHHANG (HoTen, CCCD, SoDienThoai) VALUES
+(N'Nguyễn Văn An', '012345678901', '0905111222'),
+(N'Trần Thị Bình', '012345678902', '0913333444');
+
+INSERT INTO DICHVU (TenDichVu, DonGia) VALUES
+(N'Nước suối', 10000),
+(N'Mì gói', 15000),
+(N'Giặt ủi (1kg)', 50000);
+
+INSERT INTO TAIKHOAN (Username, Password, HoTen, LoaiTaiKhoan) VALUES
+('manager', '123', N'Trần Văn Quản', N'Quản lý'),
+('letan01', '123', N'Lê Thị Lễ', N'Nhân viên');
+GO
+
+
+INSERT INTO PHIEUDATPHONG (IDKhachHang, IDPhong, NgayCheckIn, TrangThai) 
+VALUES (2, 'P102', GETDATE() - 1, N'Đã check-in');
+
+DECLARE @IDPhieuMoi INT;
+SET @IDPhieuMoi = SCOPE_IDENTITY(); 
+
+UPDATE PHONG SET TrangThai = N'Đang thuê' WHERE IDPhong = 'P102';
+
+INSERT INTO CHITIET_DICHVU (IDPhieuDat, IDDichVu, SoLuong, ThanhTien) 
+VALUES (@IDPhieuMoi, 1, 2, 20000); 
+
+INSERT INTO CHITIET_DICHVU (IDPhieuDat, IDDichVu, SoLuong, ThanhTien) 
+VALUES (@IDPhieuMoi, 2, 1, 15000);
+
+PRINT N'=== TẠO DATABASE VÀ DỮ LIỆU MẪU THÀNH CÔNG! ===';
+GO

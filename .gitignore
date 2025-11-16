@@ -1,0 +1,64 @@
+# --- Các file hệ điều hành (OS generated files) ---
+.DS_Store
+Thumbs.db
+
+# --- IDE (Visual Studio, VS Code, Rider) ---
+
+# Visual Studio
+# Thư mục chứa cài đặt của user, cache, v.v.
+.vs/
+# File cài đặt cũ của user
+*.suo
+# File cài đặt mới của user
+*.user
+# Cài đặt ReSharper (nếu dùng)
+*.sln.DotSettings
+
+# VS Code
+# Bỏ qua tất cả mọi thứ trong .vscode, ngoại trừ những file chia sẻ chung
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+# File workspace cá nhân
+*.code-workspace
+
+# JetBrains Rider
+.idea/
+
+# --- Thư mục Build (Build artifacts) ---
+# Dùng [Bb]in/ để bắt cả 'bin' và 'Bin' (phòng trường hợp)
+[Bb]in/
+[Oo]bj/
+
+# --- Gói và thư viện (Packages) ---
+# Thư mục packages kiểu cũ (packages.config)
+packages/
+# Thư viện JavaScript/TypeScript (nếu có)
+node_modules/
+# Các file package NuGet đã build
+*.nupkg
+*.snupkg
+
+# --- Kết quả Test (Test results) ---
+TestResults/
+*.trx
+
+# --- File Log và file Tạm (Logs and temporary files) ---
+*.log
+*.tmp
+*.temp
+# Các file backup của Office
+~*
+
+# --- Cài đặt Local và File bí mật (Secrets) ---
+# KHÔNG BAO GIỜ commit file chứa connection string hoặc API key
+# Thường dùng cho môi trường phát triển local
+appsettings.Development.json
+# File user secrets
+secrets.json
+# Các file bí mật khác
+*.Secret.json
+# Windows system file
+desktop.ini
