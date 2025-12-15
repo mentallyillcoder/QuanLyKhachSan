@@ -49,17 +49,19 @@ namespace QuanLyKhachSan
         void PhanQuyen()
         {
             // Lấy LoaiTaiKhoan 
-            string loaiTK = this.taiKhoanHienTai["LoaiTaiKhoan"].ToString();
+            string loaiTK = this.taiKhoanHienTai["LoaiTaiKhoan"].ToString().Trim();
             string tenHienThi = this.taiKhoanHienTai["HoTen"].ToString();
 
             lbChaoUser.Text = $"Chào {tenHienThi}";
 
-            // Nếu KHÔNG PHẢI là "Quản lý" 
-            if (loaiTK != "Quản lý")
+            // Debug: Hiển thị loại tài khoản để kiểm tra
+            // MessageBox.Show($"Loại TK: [{loaiTK}]");
+
+            // Nếu là nhân viên thì vô hiệu hóa một số chức năng quản lý
+            if (loaiTK == "Nhân viên" || loaiTK == "Lễ tân")
             {
-                // Vô hiệu hóa (khóa) các button
-                btnQLPhong.Enabled = false;
-                btnQLDichVu.Enabled = false;
+                // Nhân viên được phép: QL Đặt phòng, QL Phòng, QL Dịch vụ
+                // Nhân viên KHÔNG được phép: QL Tài khoản, Báo cáo
                 btnQLTaiKhoan.Enabled = false;
                 btnBaoCao.Enabled = false;
             }
@@ -79,6 +81,7 @@ namespace QuanLyKhachSan
 
             cboTrangThai.Items.Add("Tất cả");
             cboTrangThai.Items.Add("Trống");
+            cboTrangThai.Items.Add("Đã đặt");
             cboTrangThai.Items.Add("Đang thuê");
             cboTrangThai.Items.Add("Đang dọn dẹp");
             cboTrangThai.SelectedIndex = 0;
@@ -99,11 +102,11 @@ namespace QuanLyKhachSan
             string query = @"SELECT p.IDPhong, p.TenPhong, p.TrangThai, lp.TenLoaiPhong, lp.LoaiGiuong
                              FROM PHONG p JOIN LOAIPHONG lp ON p.IDLoaiPhong = lp.IDLoaiPhong";
 
-            //  điều kiện lọc
+            //  điều kiện lọc (không lọc theo "Đã đặt" và "Đang thuê" vì đây là trạng thái ảo)
             List<string> conditions = new List<string>();
             if (idLoaiPhong > 0)
                 conditions.Add($"p.IDLoaiPhong = {idLoaiPhong}");
-            if (trangThai != "Tất cả")
+            if (trangThai != "Tất cả" && trangThai != "Đã đặt" && trangThai != "Đang thuê")
                 conditions.Add($"p.TrangThai = N'{trangThai}'");
             if (loaiGiuong != "Tất cả")
                 conditions.Add($"lp.LoaiGiuong = N'{loaiGiuong}'");
@@ -111,23 +114,97 @@ namespace QuanLyKhachSan
                 query += " WHERE " + string.Join(" AND ", conditions);
 
             DataTable roomTable = DataProvider.ThucThiTruyVan(query);
+            
+            // Lấy danh sách phòng đã được đặt (chưa check-in) - chấp nhận nhiều trạng thái
+            string queryDaDat = @"
+                SELECT DISTINCT ct.IDPhong 
+                FROM CHITIET_PHIEUDATPHONG ct
+                JOIN PHIEUDATPHONG p ON ct.IDPhieuDat = p.IDPhieuDat
+                WHERE (LTRIM(RTRIM(p.TrangThai)) LIKE N'%Mới đặt%' 
+                       OR LTRIM(RTRIM(p.TrangThai)) LIKE N'%Đã đặt%')
+                AND p.TrangThai NOT LIKE N'%check-in%'
+                AND p.TrangThai NOT LIKE N'%hủy%'
+                AND p.TrangThai NOT LIKE N'%check-out%'";
+            DataTable dtPhongDaDat = DataProvider.ThucThiTruyVan(queryDaDat);
+            List<string> danhSachPhongDaDat = new List<string>();
+            foreach (DataRow row in dtPhongDaDat.Rows)
+            {
+                danhSachPhongDaDat.Add(row["IDPhong"].ToString());
+            }
+            
+            // Lấy danh sách phòng đang thuê (đã check-in)
+            string queryDangThue = @"
+                SELECT DISTINCT ct.IDPhong 
+                FROM CHITIET_PHIEUDATPHONG ct
+                JOIN PHIEUDATPHONG p ON ct.IDPhieuDat = p.IDPhieuDat
+                WHERE LTRIM(RTRIM(p.TrangThai)) LIKE N'%check-in%'";
+            DataTable dtPhongDangThue = DataProvider.ThucThiTruyVan(queryDangThue);
+            List<string> danhSachPhongDangThue = new List<string>();
+            foreach (DataRow row in dtPhongDangThue.Rows)
+            {
+                danhSachPhongDangThue.Add(row["IDPhong"].ToString());
+            }
+
             //nội dung của mấy cái button trong flp
             foreach (DataRow item in roomTable.Rows)
             {
                 Button roomButton = new Button() { Width = 120, Height = 120 };
                 roomButton.Tag = item; 
 
-                string text = $"{item["TenPhong"]}\n{item["TenLoaiPhong"]}\n{item["LoaiGiuong"]}\n({item["TrangThai"]})";
+                string idPhong = item["IDPhong"].ToString();
+                string trangThaiPhong = item["TrangThai"].ToString().Trim();
+                
+                // Kiểm tra trạng thái thực tế từ database
+                bool phongDaDat = danhSachPhongDaDat.Contains(idPhong);
+                bool phongDangThue = danhSachPhongDangThue.Contains(idPhong);
+                
+                // Xác định trạng thái hiển thị
+                string trangThaiHienThi = trangThaiPhong;
+                if (phongDangThue)
+                    trangThaiHienThi = "Đang thuê";
+                else if (phongDaDat)
+                    trangThaiHienThi = "Đã đặt";
+                
+                // Lọc theo trạng thái nếu cần
+                if (trangThai != "Tất cả" && trangThaiHienThi != trangThai)
+                    continue; // Bỏ qua phòng này nếu không khớp với bộ lọc
+                
+                string text = $"{item["TenPhong"]}\n{item["TenLoaiPhong"]}\n{item["LoaiGiuong"]}\n";
+                
+                // Hiển thị trạng thái ưu tiên theo database
+                if (phongDangThue)
+                {
+                    text += "(Đang thuê)";
+                    roomButton.BackColor = Color.Tomato; // Màu đỏ cho phòng đang thuê
+                }
+                else if (phongDaDat)
+                {
+                    text += "(Đã đặt)";
+                    roomButton.BackColor = Color.Gray; // Màu xám cho phòng đã đặt
+                }
+                else
+                {
+                    text += $"({trangThaiPhong})";
+                    //tô màu theo trạng thái
+                    switch (trangThaiPhong)
+                    {
+                        case "Trống": 
+                            roomButton.BackColor = Color.LightGreen; 
+                            break;
+                        case "Đang thuê": 
+                            roomButton.BackColor = Color.Tomato; 
+                            break;
+                        case "Đang dọn dẹp":
+                            roomButton.BackColor = Color.LightYellow; 
+                            break;
+                        default: 
+                            roomButton.BackColor = Color.LightGray; 
+                            break;
+                    }
+                }
+                
                 roomButton.Text = text;
                 roomButton.Font = new Font("Arial", 9, FontStyle.Bold);
-
-                //tô màu
-                switch (item["TrangThai"].ToString())
-                {
-                    case "Trống": roomButton.BackColor = Color.LightGreen; break;
-                    case "Đang thuê": roomButton.BackColor = Color.Tomato; break;
-                    default: roomButton.BackColor = Color.LightYellow; break;
-                }
 
                 roomButton.Click += RoomButton_Click;//kick chuột trái
                 roomButton.ContextMenuStrip = contextMenuPhong; //kick chuột phải
@@ -140,29 +217,76 @@ namespace QuanLyKhachSan
         {
             DataRow roomData = (sender as Button).Tag as DataRow;
             string idPhong = roomData["IDPhong"].ToString();
-            string trangThai = roomData["TrangThai"].ToString();
+            string trangThai = roomData["TrangThai"].ToString().Trim();
 
-           
-            switch (trangThai)
+            // Kiểm tra trạng thái thực tế từ database
+            string queryCheckTrangThai = $@"
+                SELECT p.TrangThai 
+                FROM PHIEUDATPHONG p
+                JOIN CHITIET_PHIEUDATPHONG ct ON p.IDPhieuDat = ct.IDPhieuDat
+                WHERE ct.IDPhong = '{idPhong}' 
+                AND p.TrangThai NOT IN (N'Đã check-out', N'Đã hủy')
+                ORDER BY p.IDPhieuDat DESC";
+            DataTable dtCheck = DataProvider.ThucThiTruyVan(queryCheckTrangThai);
+            
+            // Nếu có phiếu đặt phòng đang hoạt động
+            if (dtCheck.Rows.Count > 0)
             {
-                case "Trống":
-
-                    frmDatPhong fDatPhong = new frmDatPhong(idPhong); // Truyền mã phòng vào
-                    fDatPhong.ShowDialog(); 
-                    LoadRoomLayout(); 
-                    break;
-                case "Đang thuê":
-
+                string trangThaiPhieu = dtCheck.Rows[0]["TrangThai"].ToString().Trim();
+                
+                // Kiểm tra nếu đã check-in
+                if (trangThaiPhieu.Contains("check-in"))
+                {
+                    // Phòng đang thuê - mở form thanh toán
                     frmThanhToan fThanhToan = new frmThanhToan(idPhong); 
                     fThanhToan.ShowDialog();
                     LoadRoomLayout();
+                    return;
+                }
+                else
+                {
+                    // Phòng đã đặt nhưng chưa check-in - mở form check-in
+                    frmCheckIn fCheckIn = new frmCheckIn(idPhong);
+                    if (fCheckIn.ShowDialog() == DialogResult.OK)
+                    {
+                        LoadRoomLayout();
+                    }
+                    return;
+                }
+            }
+            
+            // Nếu không có phiếu đặt phòng nhưng trạng thái là "Đang thuê"
+            // Có thể do dữ liệu không đồng bộ
+            if (trangThai == "Đang thuê")
+            {
+                MessageBox.Show($"Phòng {idPhong} đang ở trạng thái 'Đang thuê' nhưng không tìm thấy phiếu đặt phòng!\n\n" +
+                              "Vui lòng kiểm tra lại dữ liệu hoặc cập nhật trạng thái phòng về 'Trống'.",
+                              "Lỗi dữ liệu",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Warning);
+                return;
+            }
+            
+            // Xử lý theo trạng thái phòng thông thường
+            switch (trangThai)
+            {
+                case "Trống":
+                    string username = this.taiKhoanHienTai != null ? this.taiKhoanHienTai["Username"].ToString() : "admin";
+                    frmDatPhong fDatPhong = new frmDatPhong(idPhong, username); 
+                    fDatPhong.ShowDialog(); 
+                    LoadRoomLayout(); 
                     break;
+                    
                 case "Đang dọn dẹp":
                     if (MessageBox.Show($"Xác nhận phòng [{idPhong}] đã dọn xong?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         DataProvider.ThucThiLenh($"UPDATE PHONG SET TrangThai = N'Trống' WHERE IDPhong = '{idPhong}'");
                         LoadRoomLayout();
                     }
+                    break;
+                    
+                default:
+                    MessageBox.Show($"Trạng thái phòng: {trangThai}", "Thông báo");
                     break;
             }
         }
@@ -195,20 +319,28 @@ namespace QuanLyKhachSan
 
         private void LoadFormIntoPanel(Form form)
         {
-            // Xóa các control cũ trong panelMain
-            panelMain.Controls.Clear();
-            
-            // Ẩn panelTop khi load form khác
-            panelTop.Visible = false;
-            
-            // Thiết lập form
-            form.TopLevel = false;
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.Dock = DockStyle.Fill;
-            
-            // Thêm form vào panel
-            panelMain.Controls.Add(form);
-            form.Show();
+            try
+            {
+                // Xóa các control cũ trong panelMain
+                panelMain.Controls.Clear();
+                
+                // Ẩn panelTop khi load form khác
+                panelTop.Visible = false;
+                
+                // Thiết lập form
+                form.TopLevel = false;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Dock = DockStyle.Fill;
+                
+                // Thêm form vào panel
+                panelMain.Controls.Add(form);
+                form.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi load form vào panel:\n{ex.Message}\n\nStack trace:\n{ex.StackTrace}", 
+                               "Lỗi LoadFormIntoPanel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ShowRoomLayout()
@@ -219,6 +351,26 @@ namespace QuanLyKhachSan
             panelMain.Controls.Add(flpRoomLayout);
             LoadRoomLayout();
         }
+
+        private void btnQLDatPhong_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lbTieuDe.Text = "QUẢN LÝ ĐẶT PHÒNG";
+                panelFilter.Visible = false;
+                string username = this.taiKhoanHienTai != null ? this.taiKhoanHienTai["Username"].ToString() : "admin";
+                QLDatPhong f = new QLDatPhong(username);
+                LoadFormIntoPanel(f);
+                HighlightButton(btnQLDatPhong);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form Quản lý đặt phòng:\n{ex.Message}\n\nStack trace:\n{ex.StackTrace}", 
+                               "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
 
         private void btnSoDo_Click(object sender, EventArgs e)
         {
@@ -268,6 +420,7 @@ namespace QuanLyKhachSan
         {
             // Reset tất cả button về màu mặc định (không có button nào được highlight)
             btnSoDo.BackColor = Color.FromArgb(52, 73, 94);
+            btnQLDatPhong.BackColor = Color.FromArgb(52, 73, 94);
             btnQLPhong.BackColor = Color.FromArgb(52, 73, 94);
             btnQLDichVu.BackColor = Color.FromArgb(52, 73, 94);
             btnBaoCao.BackColor = Color.FromArgb(52, 73, 94);
@@ -293,6 +446,8 @@ namespace QuanLyKhachSan
             }
         }
 
+
+
         private void contextMenuPhong_Opening(object sender, CancelEventArgs e)
         {
             
@@ -300,7 +455,8 @@ namespace QuanLyKhachSan
 
             
             DataRow roomData = roomButton.Tag as DataRow;
-            string trangThai = roomData["TrangThai"].ToString();
+            string idPhong = roomData["IDPhong"].ToString();
+            string trangThai = roomData["TrangThai"].ToString().Trim();
 
             
             itemCheckIn.Visible = false;
@@ -309,16 +465,43 @@ namespace QuanLyKhachSan
             itemChuyenPhong.Visible = false;
             itemDaDonXong.Visible = false;
 
+            // Kiểm tra trạng thái thực tế từ database
+            string queryCheckTrangThai = $@"
+                SELECT p.TrangThai 
+                FROM PHIEUDATPHONG p
+                JOIN CHITIET_PHIEUDATPHONG ct ON p.IDPhieuDat = ct.IDPhieuDat
+                WHERE ct.IDPhong = '{idPhong}' 
+                AND p.TrangThai NOT IN (N'Đã check-out', N'Đã hủy')
+                ORDER BY p.IDPhieuDat DESC";
+            DataTable dtCheck = DataProvider.ThucThiTruyVan(queryCheckTrangThai);
             
+            // Nếu có phiếu đặt phòng đang hoạt động
+            if (dtCheck.Rows.Count > 0)
+            {
+                string trangThaiPhieu = dtCheck.Rows[0]["TrangThai"].ToString().Trim();
+                
+                // Kiểm tra nếu đã check-in
+                if (trangThaiPhieu.Contains("check-in"))
+                {
+                    // Phòng đang thuê
+                    itemThanhToan.Visible = true; 
+                    itemThemDichVu.Visible = true; 
+                    itemChuyenPhong.Visible = true;
+                    return;
+                }
+                else
+                {
+                    // Phòng đã đặt - cho phép check-in
+                    itemCheckIn.Visible = true;
+                    return;
+                }
+            }
+            
+            // Xử lý theo trạng thái phòng thông thường
             switch (trangThai)
             {
                 case "Trống":
                     itemCheckIn.Visible = true; 
-                    break;
-                case "Đang thuê":
-                    itemThanhToan.Visible = true; 
-                    itemThemDichVu.Visible = true; 
-                    itemChuyenPhong.Visible = true; 
                     break;
                 case "Đang dọn dẹp":
                     itemDaDonXong.Visible = true; 

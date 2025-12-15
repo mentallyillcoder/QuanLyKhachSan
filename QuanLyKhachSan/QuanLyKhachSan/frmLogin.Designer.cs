@@ -47,6 +47,11 @@
         {
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
+            this.lbError = new System.Windows.Forms.Label();
+            this.panelProgress = new System.Windows.Forms.Panel();
+            this.lbCheckIcon = new System.Windows.Forms.Label();
+            this.lbStatus = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.lbWelcome = new System.Windows.Forms.Label();
             this.lbHotelName = new System.Windows.Forms.Label();
@@ -54,11 +59,6 @@
             this.lbClose = new System.Windows.Forms.Label();
             this.btnThoat = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.panelProgress = new System.Windows.Forms.Panel();
-            this.lbCheckIcon = new System.Windows.Forms.Label();
-            this.lbStatus = new System.Windows.Forms.Label();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.lbError = new System.Windows.Forms.Label();
             this.panelPassword = new System.Windows.Forms.Panel();
             this.lbPassIcon = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -69,9 +69,9 @@
             this.lbTenDangNhap = new System.Windows.Forms.Label();
             this.lbDangNhap = new System.Windows.Forms.Label();
             this.panelRight.SuspendLayout();
+            this.panelProgress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.panelClose.SuspendLayout();
-            this.panelProgress.SuspendLayout();
             this.panelPassword.SuspendLayout();
             this.panelUsername.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +85,7 @@
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(350, 500);
             this.panelLeft.TabIndex = 0;
+            this.panelLeft.Paint += new System.Windows.Forms.PaintEventHandler(this.panelLeft_Paint);
             // 
             // panelRight
             // 
@@ -107,6 +108,59 @@
             this.panelRight.Name = "panelRight";
             this.panelRight.Size = new System.Drawing.Size(450, 500);
             this.panelRight.TabIndex = 1;
+            // 
+            // lbError
+            // 
+            this.lbError.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
+            this.lbError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.lbError.Location = new System.Drawing.Point(60, 340);
+            this.lbError.Name = "lbError";
+            this.lbError.Size = new System.Drawing.Size(330, 35);
+            this.lbError.TabIndex = 15;
+            this.lbError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbError.Visible = false;
+            // 
+            // panelProgress
+            // 
+            this.panelProgress.Controls.Add(this.lbCheckIcon);
+            this.panelProgress.Controls.Add(this.lbStatus);
+            this.panelProgress.Controls.Add(this.progressBar);
+            this.panelProgress.Location = new System.Drawing.Point(60, 385);
+            this.panelProgress.Name = "panelProgress";
+            this.panelProgress.Size = new System.Drawing.Size(330, 70);
+            this.panelProgress.TabIndex = 14;
+            this.panelProgress.Visible = false;
+            // 
+            // lbCheckIcon
+            // 
+            this.lbCheckIcon.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
+            this.lbCheckIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.lbCheckIcon.Location = new System.Drawing.Point(0, 0);
+            this.lbCheckIcon.Name = "lbCheckIcon";
+            this.lbCheckIcon.Size = new System.Drawing.Size(330, 70);
+            this.lbCheckIcon.TabIndex = 2;
+            this.lbCheckIcon.Text = "✓";
+            this.lbCheckIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbCheckIcon.Visible = false;
+            // 
+            // lbStatus
+            // 
+            this.lbStatus.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Italic);
+            this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.lbStatus.Location = new System.Drawing.Point(0, 5);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(330, 25);
+            this.lbStatus.TabIndex = 1;
+            this.lbStatus.Text = "Đang đăng nhập...";
+            this.lbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(0, 35);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(330, 25);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 0;
             // 
             // pbLogo
             // 
@@ -220,7 +274,7 @@
             this.lbPassIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
             this.lbPassIcon.Location = new System.Drawing.Point(8, 9);
             this.lbPassIcon.Name = "lbPassIcon";
-            this.lbPassIcon.Size = new System.Drawing.Size(25, 25);
+            this.lbPassIcon.Size = new System.Drawing.Size(33, 25);
             this.lbPassIcon.TabIndex = 5;
             this.lbPassIcon.Text = "🔒";
             // 
@@ -252,7 +306,7 @@
             this.lbUserIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(165)))), ((int)(((byte)(166)))));
             this.lbUserIcon.Location = new System.Drawing.Point(8, 9);
             this.lbUserIcon.Name = "lbUserIcon";
-            this.lbUserIcon.Size = new System.Drawing.Size(25, 25);
+            this.lbUserIcon.Size = new System.Drawing.Size(33, 25);
             this.lbUserIcon.TabIndex = 4;
             this.lbUserIcon.Text = "👤";
             // 
@@ -260,10 +314,11 @@
             // 
             this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.Location = new System.Drawing.Point(45, 11);
+            this.txtUsername.Location = new System.Drawing.Point(45, 12);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(270, 22);
             this.txtUsername.TabIndex = 3;
+            this.txtUsername.TextChanged += new System.EventHandler(this.txtUsername_TextChanged);
             // 
             // lbMatKhau
             // 
@@ -272,7 +327,7 @@
             this.lbMatKhau.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lbMatKhau.Location = new System.Drawing.Point(56, 245);
             this.lbMatKhau.Name = "lbMatKhau";
-            this.lbMatKhau.Size = new System.Drawing.Size(75, 20);
+            this.lbMatKhau.Size = new System.Drawing.Size(70, 20);
             this.lbMatKhau.TabIndex = 2;
             this.lbMatKhau.Text = "Mật khẩu";
             // 
@@ -283,7 +338,7 @@
             this.lbTenDangNhap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lbTenDangNhap.Location = new System.Drawing.Point(56, 155);
             this.lbTenDangNhap.Name = "lbTenDangNhap";
-            this.lbTenDangNhap.Size = new System.Drawing.Size(116, 20);
+            this.lbTenDangNhap.Size = new System.Drawing.Size(107, 20);
             this.lbTenDangNhap.TabIndex = 1;
             this.lbTenDangNhap.Text = "Tên đăng nhập";
             // 
@@ -294,63 +349,9 @@
             this.lbDangNhap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lbDangNhap.Location = new System.Drawing.Point(140, 110);
             this.lbDangNhap.Name = "lbDangNhap";
-            this.lbDangNhap.Size = new System.Drawing.Size(155, 32);
+            this.lbDangNhap.Size = new System.Drawing.Size(143, 32);
             this.lbDangNhap.TabIndex = 0;
             this.lbDangNhap.Text = "Đăng Nhập";
-            // 
-            // panelProgress
-            // 
-            this.panelProgress.Controls.Add(this.lbCheckIcon);
-            this.panelProgress.Controls.Add(this.lbStatus);
-            this.panelProgress.Controls.Add(this.progressBar);
-            this.panelProgress.Location = new System.Drawing.Point(60, 385);
-            this.panelProgress.Name = "panelProgress";
-            this.panelProgress.Size = new System.Drawing.Size(330, 70);
-            this.panelProgress.TabIndex = 14;
-            this.panelProgress.Visible = false;
-            // 
-            // lbCheckIcon
-            // 
-            this.lbCheckIcon.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold);
-            this.lbCheckIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.lbCheckIcon.Location = new System.Drawing.Point(0, 0);
-            this.lbCheckIcon.Name = "lbCheckIcon";
-            this.lbCheckIcon.Size = new System.Drawing.Size(330, 70);
-            this.lbCheckIcon.TabIndex = 2;
-            this.lbCheckIcon.Text = "✓";
-            this.lbCheckIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbCheckIcon.Visible = false;
-            // 
-            // lbStatus
-            // 
-            this.lbStatus.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Italic);
-            this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-            this.lbStatus.Location = new System.Drawing.Point(0, 5);
-            this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(330, 25);
-            this.lbStatus.TabIndex = 1;
-            this.lbStatus.Text = "Đang đăng nhập...";
-            this.lbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // progressBar
-            // 
-            this.progressBar.Location = new System.Drawing.Point(0, 35);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(330, 25);
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar.TabIndex = 0;
-            // 
-            // lbError
-            // 
-            this.lbError.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.lbError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.lbError.Location = new System.Drawing.Point(60, 340);
-            this.lbError.Name = "lbError";
-            this.lbError.Size = new System.Drawing.Size(330, 35);
-            this.lbError.TabIndex = 15;
-            this.lbError.Text = "";
-            this.lbError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbError.Visible = false;
             // 
             // frmLogin
             // 
@@ -367,10 +368,10 @@
             this.Load += new System.EventHandler(this.frmLogin_Load);
             this.panelRight.ResumeLayout(false);
             this.panelRight.PerformLayout();
+            this.panelProgress.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.panelClose.ResumeLayout(false);
             this.panelClose.PerformLayout();
-            this.panelProgress.ResumeLayout(false);
             this.panelPassword.ResumeLayout(false);
             this.panelPassword.PerformLayout();
             this.panelUsername.ResumeLayout(false);

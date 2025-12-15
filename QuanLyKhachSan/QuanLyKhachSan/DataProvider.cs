@@ -10,7 +10,7 @@ namespace QuanLyKhachSan
 {
     internal class DataProvider
     {
-        private static string connectionString = "Data Source=localhost;Initial Catalog=QuanLyKhachSan;Integrated Security=True";
+        private static string connectionString = "Data Source=localhost;Initial Catalog=QuanLyKhachSan1;Integrated Security=True";
 
         // Hàm thực thi câu lệnh SELECT, trả về DataTable
         public static DataTable ThucThiTruyVan(string query)
@@ -47,6 +47,27 @@ namespace QuanLyKhachSan
                 catch (Exception ex)
                 {
                     Console.WriteLine("Lỗi thực thi lệnh: " + ex.Message);
+                    throw; // Ném lỗi lên để caller có thể bắt
+                }
+            }
+            return result;
+        }
+
+        // Hàm thực thi câu lệnh trả về giá trị đơn (ExecuteScalar)
+        public static object ThucThiScalar(string query)
+        {
+            object result = null;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    result = command.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi thực thi scalar: " + ex.Message);
                 }
             }
             return result;

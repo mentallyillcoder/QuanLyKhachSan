@@ -79,9 +79,9 @@ namespace QuanLyKhachSan
             this.lbTitle.AutoSize = true;
             this.lbTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lbTitle.ForeColor = System.Drawing.Color.White;
-            this.lbTitle.Location = new System.Drawing.Point(20, 15);
+            this.lbTitle.Location = new System.Drawing.Point(375, 9);
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.Size = new System.Drawing.Size(201, 32);
+            this.lbTitle.Size = new System.Drawing.Size(212, 32);
             this.lbTitle.TabIndex = 0;
             this.lbTitle.Text = "QUẢN LÝ PHÒNG";
             // 
@@ -258,7 +258,7 @@ namespace QuanLyKhachSan
             this.lbTrangThai.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbTrangThai.Location = new System.Drawing.Point(320, 113);
             this.lbTrangThai.Name = "lbTrangThai";
-            this.lbTrangThai.Size = new System.Drawing.Size(74, 19);
+            this.lbTrangThai.Size = new System.Drawing.Size(73, 19);
             this.lbTrangThai.TabIndex = 3;
             this.lbTrangThai.Text = "Trạng thái:";
             // 
@@ -268,7 +268,7 @@ namespace QuanLyKhachSan
             this.lbLoaiPhong.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbLoaiPhong.Location = new System.Drawing.Point(320, 53);
             this.lbLoaiPhong.Name = "lbLoaiPhong";
-            this.lbLoaiPhong.Size = new System.Drawing.Size(82, 19);
+            this.lbLoaiPhong.Size = new System.Drawing.Size(81, 19);
             this.lbLoaiPhong.TabIndex = 2;
             this.lbLoaiPhong.Text = "Loại phòng:";
             // 
@@ -278,7 +278,7 @@ namespace QuanLyKhachSan
             this.lbTenPhong.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbTenPhong.Location = new System.Drawing.Point(30, 113);
             this.lbTenPhong.Name = "lbTenPhong";
-            this.lbTenPhong.Size = new System.Drawing.Size(80, 19);
+            this.lbTenPhong.Size = new System.Drawing.Size(77, 19);
             this.lbTenPhong.TabIndex = 1;
             this.lbTenPhong.Text = "Tên phòng:";
             // 
@@ -288,7 +288,7 @@ namespace QuanLyKhachSan
             this.lbMaPhong.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbMaPhong.Location = new System.Drawing.Point(30, 53);
             this.lbMaPhong.Name = "lbMaPhong";
-            this.lbMaPhong.Size = new System.Drawing.Size(78, 19);
+            this.lbMaPhong.Size = new System.Drawing.Size(76, 19);
             this.lbMaPhong.TabIndex = 0;
             this.lbMaPhong.Text = "Mã phòng:";
             // 

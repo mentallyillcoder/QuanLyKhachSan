@@ -223,6 +223,14 @@ namespace QuanLyKhachSan
             Application.Exit();
         }
 
-        
+        private void panelLeft_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

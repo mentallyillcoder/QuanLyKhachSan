@@ -62,7 +62,7 @@ namespace QuanLyKhachSan
             // 
             // panelTop
             // 
-            this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(89)))), ((int)(((byte)(182)))));
+            this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.panelTop.Controls.Add(this.lbTitle);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
@@ -75,9 +75,9 @@ namespace QuanLyKhachSan
             this.lbTitle.AutoSize = true;
             this.lbTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lbTitle.ForeColor = System.Drawing.Color.White;
-            this.lbTitle.Location = new System.Drawing.Point(20, 15);
+            this.lbTitle.Location = new System.Drawing.Point(371, 9);
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.Size = new System.Drawing.Size(219, 32);
+            this.lbTitle.Size = new System.Drawing.Size(224, 32);
             this.lbTitle.TabIndex = 0;
             this.lbTitle.Text = "QUẢN LÝ DỊCH VỤ";
             // 
@@ -242,7 +242,7 @@ namespace QuanLyKhachSan
             this.lbDonGia.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbDonGia.Location = new System.Drawing.Point(320, 53);
             this.lbDonGia.Name = "lbDonGia";
-            this.lbDonGia.Size = new System.Drawing.Size(61, 19);
+            this.lbDonGia.Size = new System.Drawing.Size(60, 19);
             this.lbDonGia.TabIndex = 2;
             this.lbDonGia.Text = "Đơn giá:";
             // 
@@ -252,7 +252,7 @@ namespace QuanLyKhachSan
             this.lbTenDV.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbTenDV.Location = new System.Drawing.Point(30, 113);
             this.lbTenDV.Name = "lbTenDV";
-            this.lbTenDV.Size = new System.Drawing.Size(85, 19);
+            this.lbTenDV.Size = new System.Drawing.Size(81, 19);
             this.lbTenDV.TabIndex = 1;
             this.lbTenDV.Text = "Tên dịch vụ:";
             // 
@@ -262,7 +262,7 @@ namespace QuanLyKhachSan
             this.lbMaDV.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbMaDV.Location = new System.Drawing.Point(30, 53);
             this.lbMaDV.Name = "lbMaDV";
-            this.lbMaDV.Size = new System.Drawing.Size(83, 19);
+            this.lbMaDV.Size = new System.Drawing.Size(80, 19);
             this.lbMaDV.TabIndex = 0;
             this.lbMaDV.Text = "Mã dịch vụ:";
             // 

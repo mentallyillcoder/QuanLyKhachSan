@@ -13,6 +13,7 @@ namespace QuanLyKhachSan
     public partial class frmDatPhong : Form
     {
         private string maPhong;
+        private string usernameNhanVien = "admin"; // Mặc định
         private int idKhachHangTimThay = -1; // Biến để lưu ID khách hàng nếu tìm thấy
 
         
@@ -20,6 +21,11 @@ namespace QuanLyKhachSan
         {
             InitializeComponent();
             this.maPhong = idPhong;
+        }
+
+        public frmDatPhong(string idPhong, string username) : this(idPhong)
+        {
+            this.usernameNhanVien = username;
         }
 
        
@@ -95,15 +101,58 @@ namespace QuanLyKhachSan
                     idKhachHang = Convert.ToInt32(dt.Rows[0][0]);
                 }
 
-                // Có ID khách hàng rồi, giờ tạo Phiếu đặt phòng
-                string queryInsertPDP = $"INSERT INTO PHIEUDATPHONG (IDKhachHang, IDPhong, NgayCheckIn, TrangThai) " +
-                                       $"VALUES ({idKhachHang}, '{this.maPhong}', '{ngayCheckIn.ToString("yyyy-MM-dd HH:mm:ss")}', N'Đã check-in')";
+                // Tìm ID nhỏ nhất còn trống để tái sử dụng
+                string sqlFindGap = @"
+                    SELECT MIN(t1.IDPhieuDat + 1) AS NextID
+                    FROM PHIEUDATPHONG t1
+                    LEFT JOIN PHIEUDATPHONG t2 ON t1.IDPhieuDat + 1 = t2.IDPhieuDat
+                    WHERE t2.IDPhieuDat IS NULL";
+                
+                DataTable dtGap = DataProvider.ThucThiTruyVan(sqlFindGap);
+                int idPhieuDat = 1;
+                
+                if (dtGap.Rows.Count > 0 && dtGap.Rows[0]["NextID"] != DBNull.Value)
+                {
+                    idPhieuDat = Convert.ToInt32(dtGap.Rows[0]["NextID"]);
+                }
+                else
+                {
+                    string sqlMaxID = "SELECT ISNULL(MAX(IDPhieuDat), 0) + 1 AS NextID FROM PHIEUDATPHONG";
+                    DataTable dtMax = DataProvider.ThucThiTruyVan(sqlMaxID);
+                    idPhieuDat = Convert.ToInt32(dtMax.Rows[0]["NextID"]);
+                }
+                
+                // Tạo Phiếu đặt phòng với ID cụ thể
+                string queryInsertPDP = $@"
+                    SET IDENTITY_INSERT PHIEUDATPHONG ON;
+                    INSERT INTO PHIEUDATPHONG (IDPhieuDat, IDKhachHang, NgayLapPhieu, NgayCheckIn, TrangThai, UsernameNV) 
+                    VALUES ({idPhieuDat}, {idKhachHang}, GETDATE(), '{ngayCheckIn.ToString("yyyy-MM-dd HH:mm:ss")}', N'Đã check-in', '{this.usernameNhanVien}');
+                    SET IDENTITY_INSERT PHIEUDATPHONG OFF;";
+
+                DataProvider.ThucThiLenh(queryInsertPDP);
+
+                // Lấy đơn giá phòng
+                string queryDonGia = $@"
+                    SELECT lp.DonGia 
+                    FROM PHONG p 
+                    JOIN LOAIPHONG lp ON p.IDLoaiPhong = lp.IDLoaiPhong 
+                    WHERE p.IDPhong = '{this.maPhong}'";
+                DataTable dtDonGia = DataProvider.ThucThiTruyVan(queryDonGia);
+                decimal donGia = Convert.ToDecimal(dtDonGia.Rows[0]["DonGia"]);
+
+                // Thêm chi tiết phòng vào CHITIET_PHIEUDATPHONG với NgayBatDau = NgayCheckIn
+                string queryInsertChiTiet = $@"
+                    INSERT INTO CHITIET_PHIEUDATPHONG (IDPhieuDat, IDPhong, SoNguoi, NgayBatDau, NgayKetThuc, DonGia) 
+                    VALUES ({idPhieuDat}, '{this.maPhong}', 1, 
+                            '{ngayCheckIn.ToString("yyyy-MM-dd HH:mm:ss")}', 
+                            '{ngayCheckIn.AddDays(1).ToString("yyyy-MM-dd HH:mm:ss")}', 
+                            {donGia})";
 
                 // Cập nhật trạng thái phòng
                 string queryUpdatePhong = $"UPDATE PHONG SET TrangThai = N'Đang thuê' WHERE IDPhong = '{this.maPhong}'";
 
                 // Thực thi các lệnh
-                DataProvider.ThucThiLenh(queryInsertPDP);
+                DataProvider.ThucThiLenh(queryInsertChiTiet);
                 DataProvider.ThucThiLenh(queryUpdatePhong);
 
                 MessageBox.Show("Check-in thành công!");

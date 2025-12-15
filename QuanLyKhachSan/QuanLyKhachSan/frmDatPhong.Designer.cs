@@ -77,7 +77,7 @@ namespace QuanLyKhachSan
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(700, 60);
             this.label1.TabIndex = 0;
-            this.label1.Text = "CHECK-IN PHÒNG";
+            this.label1.Text = "Phiếu đặt phòng";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelMain
@@ -106,9 +106,9 @@ namespace QuanLyKhachSan
             // 
             // dtpCheckIn
             // 
+            this.dtpCheckIn.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtpCheckIn.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dtpCheckIn.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpCheckIn.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtpCheckIn.Location = new System.Drawing.Point(200, 45);
             this.dtpCheckIn.Name = "dtpCheckIn";
             this.dtpCheckIn.Size = new System.Drawing.Size(400, 25);
@@ -120,7 +120,7 @@ namespace QuanLyKhachSan
             this.label7.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label7.Location = new System.Drawing.Point(40, 48);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(112, 19);
+            this.label7.Size = new System.Drawing.Size(103, 19);
             this.label7.TabIndex = 0;
             this.label7.Text = "Ngày Check-In:";
             // 
@@ -155,7 +155,7 @@ namespace QuanLyKhachSan
             this.label5.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label5.Location = new System.Drawing.Point(40, 168);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 19);
+            this.label5.Size = new System.Drawing.Size(92, 19);
             this.label5.TabIndex = 5;
             this.label5.Text = "Số điện thoại:";
             // 
@@ -207,7 +207,7 @@ namespace QuanLyKhachSan
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label3.Location = new System.Drawing.Point(40, 51);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 19);
+            this.label3.Size = new System.Drawing.Size(49, 19);
             this.label3.TabIndex = 0;
             this.label3.Text = "CCCD:";
             // 

@@ -76,9 +76,9 @@ namespace QuanLyKhachSan
             this.lbTitle.AutoSize = true;
             this.lbTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lbTitle.ForeColor = System.Drawing.Color.White;
-            this.lbTitle.Location = new System.Drawing.Point(20, 15);
+            this.lbTitle.Location = new System.Drawing.Point(362, 9);
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.Size = new System.Drawing.Size(334, 32);
+            this.lbTitle.Size = new System.Drawing.Size(267, 32);
             this.lbTitle.TabIndex = 0;
             this.lbTitle.Text = "BÁO CÁO - THỐNG KÊ";
             // 
@@ -137,7 +137,7 @@ namespace QuanLyKhachSan
             this.lbDenNgay.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lbDenNgay.Location = new System.Drawing.Point(430, 31);
             this.lbDenNgay.Name = "lbDenNgay";
-            this.lbDenNgay.Size = new System.Drawing.Size(77, 19);
+            this.lbDenNgay.Size = new System.Drawing.Size(76, 19);
             this.lbDenNgay.TabIndex = 1;
             this.lbDenNgay.Text = "Đến ngày:";
             // 
@@ -147,7 +147,7 @@ namespace QuanLyKhachSan
             this.lbTuNgay.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lbTuNgay.Location = new System.Drawing.Point(40, 31);
             this.lbTuNgay.Name = "lbTuNgay";
-            this.lbTuNgay.Size = new System.Drawing.Size(68, 19);
+            this.lbTuNgay.Size = new System.Drawing.Size(67, 19);
             this.lbTuNgay.TabIndex = 0;
             this.lbTuNgay.Text = "Từ ngày:";
             // 

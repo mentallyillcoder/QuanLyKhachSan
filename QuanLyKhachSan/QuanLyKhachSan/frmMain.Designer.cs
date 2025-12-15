@@ -18,6 +18,7 @@ namespace QuanLyKhachSan
         private System.Windows.Forms.Panel panelSidebar;
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.Button btnSoDo;
+        private System.Windows.Forms.Button btnQLDatPhong;
         private System.Windows.Forms.Button btnQLPhong;
         private System.Windows.Forms.Button btnQLDichVu;
         private System.Windows.Forms.Button btnBaoCao;
@@ -52,6 +53,7 @@ namespace QuanLyKhachSan
             this.btnBaoCao = new System.Windows.Forms.Button();
             this.btnQLDichVu = new System.Windows.Forms.Button();
             this.btnQLPhong = new System.Windows.Forms.Button();
+            this.btnQLDatPhong = new System.Windows.Forms.Button();
             this.btnSoDo = new System.Windows.Forms.Button();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.panelTop = new System.Windows.Forms.Panel();
@@ -88,6 +90,7 @@ namespace QuanLyKhachSan
             this.panelSidebar.Controls.Add(this.btnBaoCao);
             this.panelSidebar.Controls.Add(this.btnQLDichVu);
             this.panelSidebar.Controls.Add(this.btnQLPhong);
+            this.panelSidebar.Controls.Add(this.btnQLDatPhong);
             this.panelSidebar.Controls.Add(this.btnSoDo);
             this.panelSidebar.Controls.Add(this.pbLogo);
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
@@ -101,7 +104,7 @@ namespace QuanLyKhachSan
             // 
             this.lbChaoUser.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Italic);
             this.lbChaoUser.ForeColor = System.Drawing.Color.White;
-            this.lbChaoUser.Location = new System.Drawing.Point(10, 650);
+            this.lbChaoUser.Location = new System.Drawing.Point(10, 640);
             this.lbChaoUser.Name = "lbChaoUser";
             this.lbChaoUser.Size = new System.Drawing.Size(230, 40);
             this.lbChaoUser.TabIndex = 7;
@@ -116,7 +119,7 @@ namespace QuanLyKhachSan
             this.btnDangXuat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDangXuat.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnDangXuat.ForeColor = System.Drawing.Color.White;
-            this.btnDangXuat.Location = new System.Drawing.Point(20, 550);
+            this.btnDangXuat.Location = new System.Drawing.Point(20, 580);
             this.btnDangXuat.Name = "btnDangXuat";
             this.btnDangXuat.Size = new System.Drawing.Size(210, 50);
             this.btnDangXuat.TabIndex = 6;
@@ -132,7 +135,7 @@ namespace QuanLyKhachSan
             this.btnQLTaiKhoan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQLTaiKhoan.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnQLTaiKhoan.ForeColor = System.Drawing.Color.White;
-            this.btnQLTaiKhoan.Location = new System.Drawing.Point(20, 450);
+            this.btnQLTaiKhoan.Location = new System.Drawing.Point(20, 510);
             this.btnQLTaiKhoan.Name = "btnQLTaiKhoan";
             this.btnQLTaiKhoan.Size = new System.Drawing.Size(210, 50);
             this.btnQLTaiKhoan.TabIndex = 5;
@@ -148,7 +151,7 @@ namespace QuanLyKhachSan
             this.btnBaoCao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBaoCao.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnBaoCao.ForeColor = System.Drawing.Color.White;
-            this.btnBaoCao.Location = new System.Drawing.Point(20, 390);
+            this.btnBaoCao.Location = new System.Drawing.Point(20, 450);
             this.btnBaoCao.Name = "btnBaoCao";
             this.btnBaoCao.Size = new System.Drawing.Size(210, 50);
             this.btnBaoCao.TabIndex = 4;
@@ -164,7 +167,7 @@ namespace QuanLyKhachSan
             this.btnQLDichVu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQLDichVu.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnQLDichVu.ForeColor = System.Drawing.Color.White;
-            this.btnQLDichVu.Location = new System.Drawing.Point(20, 330);
+            this.btnQLDichVu.Location = new System.Drawing.Point(20, 390);
             this.btnQLDichVu.Name = "btnQLDichVu";
             this.btnQLDichVu.Size = new System.Drawing.Size(210, 50);
             this.btnQLDichVu.TabIndex = 3;
@@ -180,7 +183,7 @@ namespace QuanLyKhachSan
             this.btnQLPhong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQLPhong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnQLPhong.ForeColor = System.Drawing.Color.White;
-            this.btnQLPhong.Location = new System.Drawing.Point(20, 270);
+            this.btnQLPhong.Location = new System.Drawing.Point(20, 330);
             this.btnQLPhong.Name = "btnQLPhong";
             this.btnQLPhong.Size = new System.Drawing.Size(210, 50);
             this.btnQLPhong.TabIndex = 2;
@@ -204,6 +207,22 @@ namespace QuanLyKhachSan
             this.btnSoDo.UseVisualStyleBackColor = false;
             this.btnSoDo.Click += new System.EventHandler(this.btnSoDo_Click);
             // 
+            // btnQLDatPhong
+            // 
+            this.btnQLDatPhong.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.btnQLDatPhong.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQLDatPhong.FlatAppearance.BorderSize = 0;
+            this.btnQLDatPhong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQLDatPhong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnQLDatPhong.ForeColor = System.Drawing.Color.White;
+            this.btnQLDatPhong.Location = new System.Drawing.Point(20, 270);
+            this.btnQLDatPhong.Name = "btnQLDatPhong";
+            this.btnQLDatPhong.Size = new System.Drawing.Size(210, 50);
+            this.btnQLDatPhong.TabIndex = 8;
+            this.btnQLDatPhong.Text = "QL Đặt phòng";
+            this.btnQLDatPhong.UseVisualStyleBackColor = false;
+            this.btnQLDatPhong.Click += new System.EventHandler(this.btnQLDatPhong_Click);
+            
             // pbLogo
             // 
             this.pbLogo.Location = new System.Drawing.Point(50, 30);

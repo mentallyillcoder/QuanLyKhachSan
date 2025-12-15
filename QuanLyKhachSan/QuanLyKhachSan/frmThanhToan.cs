@@ -42,33 +42,83 @@ namespace QuanLyKhachSan
             try
             {
 
-                // A. TÌM PHIẾU ĐẶT PHÒNG (Để lấy IDPhieuDat, NgayCheckIn, IDKhachHang)
-                string queryPDP = $"SELECT * FROM PHIEUDATPHONG WHERE IDPhong = '{this.maPhong}' AND TrangThai = N'Đã check-in'";
+                // A. TÌM PHIẾU ĐẶT PHÒNG (Thông qua CHITIET_PHIEUDATPHONG)
+                string queryPDP = $@"
+                    SELECT p.IDPhieuDat, p.NgayCheckIn, p.IDKhachHang 
+                    FROM PHIEUDATPHONG p
+                    JOIN CHITIET_PHIEUDATPHONG ct ON p.IDPhieuDat = ct.IDPhieuDat
+                    WHERE ct.IDPhong = '{this.maPhong}' AND p.TrangThai = N'Đã check-in'";
                 DataTable dtPDP = DataProvider.ThucThiTruyVan(queryPDP);
-                if (dtPDP.Rows.Count == 0) { this.Close(); return; }
+                if (dtPDP.Rows.Count == 0) 
+                { 
+                    MessageBox.Show("Không tìm thấy phiếu đặt phòng đang check-in cho phòng này!", "Thông báo");
+                    this.Close(); 
+                    return; 
+                }
 
                 DataRow rowPDP = dtPDP.Rows[0];
                 this.idPhieuDatHienTai = Convert.ToInt32(rowPDP["IDPhieuDat"]);
                 this.ngayCheckIn = Convert.ToDateTime(rowPDP["NgayCheckIn"]);
                 int idKhachHang = Convert.ToInt32(rowPDP["IDKhachHang"]);
-                // B. TÌM KHÁCH HÀNG (Để lấy tên)
+                
+                // B. TÌM KHÁCH HÀNG (Để lấy tên và CCCD)
                 string queryKH = $"SELECT * FROM KHACHHANG WHERE IDKhachHang = {idKhachHang}";
-                lbTenKhachHang.Text = DataProvider.ThucThiTruyVan(queryKH).Rows[0]["HoTen"].ToString();
-                // C. TÌM PHÒNG & LOẠI PHÒNG (Để lấy Tên phòng và Đơn giá)
-                string queryPhong = $"SELECT p.TenPhong, lp.DonGia FROM PHONG p JOIN LOAIPHONG lp ON p.IDLoaiPhong = lp.IDLoaiPhong WHERE p.IDPhong = '{this.maPhong}'";
-                DataTable dtPhong = DataProvider.ThucThiTruyVan(queryPhong);
-                this.donGiaPhong = Convert.ToDecimal(dtPhong.Rows[0]["DonGia"]);
-                lbPhong.Text = dtPhong.Rows[0]["TenPhong"].ToString();
+                DataTable dtKH = DataProvider.ThucThiTruyVan(queryKH);
+                if (dtKH.Rows.Count > 0)
+                {
+                    lbTenKhachHang.Text = dtKH.Rows[0]["HoTen"].ToString();
+                    lbCCCD.Text = dtKH.Rows[0]["CCCD"] != DBNull.Value ? dtKH.Rows[0]["CCCD"].ToString() : "N/A";
+                }
+                
+                // C. TÌM TẤT CẢ CÁC PHÒNG TRONG PHIẾU ĐẶT NÀY
+                string queryAllPhong = $@"
+                    SELECT p.IDPhong, p.TenPhong, lp.TenLoaiPhong, lp.DonGia
+                    FROM CHITIET_PHIEUDATPHONG ct
+                    JOIN PHONG p ON ct.IDPhong = p.IDPhong
+                    JOIN LOAIPHONG lp ON p.IDLoaiPhong = lp.IDLoaiPhong
+                    WHERE ct.IDPhieuDat = {this.idPhieuDatHienTai}";
+                DataTable dtAllPhong = DataProvider.ThucThiTruyVan(queryAllPhong);
+                
+                // Tính tổng đơn giá của tất cả các phòng
+                this.donGiaPhong = 0;
+                string danhSachPhong = "";
+                foreach (DataRow row in dtAllPhong.Rows)
+                {
+                    this.donGiaPhong += Convert.ToDecimal(row["DonGia"]);
+                    danhSachPhong += row["TenPhong"].ToString() + " (" + row["TenLoaiPhong"].ToString() + ")" + Environment.NewLine;
+                }
+                
+                // Hiển thị danh sách phòng (bỏ dòng trống cuối)
+                if (danhSachPhong.Length > 0)
+                    danhSachPhong = danhSachPhong.TrimEnd();
+                
+                lbPhong.Text = danhSachPhong;
                 lbNgayCheckIn.Text = this.ngayCheckIn.ToString("dd/MM/yyyy HH:mm");
 
-                // D. TẢI DỊCH VỤ VÀ TÍNH TIỀN DỊCH VỤ (Tiền DV là cố định)
-                string queryDV_List = $"SELECT dv.TenDichVu, cdv.SoLuong, cdv.ThanhTien FROM CHITIET_DICHVU cdv JOIN DICHVU dv ON cdv.IDDichVu = dv.IDDichVu WHERE cdv.IDPhieuDat = {this.idPhieuDatHienTai}";
-                dgvDichVuDaSuDung.DataSource = DataProvider.ThucThiTruyVan(queryDV_List);
+                // D. TẢI DỊCH VỤ VÀ TÍNH TIỀN DỊCH VỤ (Sử dụng ThanhTien tự động tính)
+                string queryDV_List = $@"
+                    SELECT 
+                        dv.TenDichVu, 
+                        cdv.SoLuong, 
+                        cdv.DonGia,
+                        (cdv.SoLuong * cdv.DonGia) AS ThanhTien
+                    FROM CHITIET_DICHVU cdv 
+                    JOIN DICHVU dv ON cdv.IDDichVu = dv.IDDichVu 
+                    WHERE cdv.IDPhieuDat = {this.idPhieuDatHienTai}";
+                
+                DataTable dtDichVu = DataProvider.ThucThiTruyVan(queryDV_List);
+                dgvDichVuDaSuDung.DataSource = dtDichVu;
 
-                string queryDV_Sum = $"SELECT SUM(ThanhTien) FROM CHITIET_DICHVU WHERE IDPhieuDat = {this.idPhieuDatHienTai}";
-                object sumDV = DataProvider.ThucThiTruyVan(queryDV_Sum).Rows[0][0];
-                this.tienDichVu = (sumDV == DBNull.Value) ? 0 : Convert.ToDecimal(sumDV);
+                // Tính tổng tiền dịch vụ từ kết quả query
+                this.tienDichVu = 0;
+                foreach (DataRow row in dtDichVu.Rows)
+                {
+                    this.tienDichVu += Convert.ToDecimal(row["ThanhTien"]);
+                }
+                
                 lbTienDichVu.Text = this.tienDichVu.ToString("N0") + " VNĐ";
+                
+                Console.WriteLine($"Tổng tiền dịch vụ: {this.tienDichVu:N0} VNĐ từ {dtDichVu.Rows.Count} dịch vụ");
             }
             catch (Exception ex)
             {
@@ -132,8 +182,15 @@ namespace QuanLyKhachSan
                                        $"TongTienHoaDon = {tongTien}, TrangThai = N'Đã check-out' " +
                                        $"WHERE IDPhieuDat = {this.idPhieuDatHienTai}";
 
-                // 3. CẬP NHẬT TRẠNG THÁI PHÒNG
-                string queryUpdatePhong = $"UPDATE PHONG SET TrangThai = N'Đang dọn dẹp' WHERE IDPhong = '{this.maPhong}'";
+                // 3. CẬP NHẬT TRẠNG THÁI TẤT CẢ CÁC PHÒNG TRONG PHIẾU ĐẶT NÀY
+                string queryUpdatePhong = $@"
+                    UPDATE PHONG 
+                    SET TrangThai = N'Đang dọn dẹp' 
+                    WHERE IDPhong IN (
+                        SELECT IDPhong 
+                        FROM CHITIET_PHIEUDATPHONG 
+                        WHERE IDPhieuDat = {this.idPhieuDatHienTai}
+                    )";
 
                 
                 DataProvider.ThucThiLenh(queryInsertHD);
