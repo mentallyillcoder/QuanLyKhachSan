@@ -173,10 +173,10 @@ namespace QuanLyKhachSan
             this.dgvHoaDon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvHoaDon.Location = new System.Drawing.Point(20, 20);
             this.dgvHoaDon.Name = "dgvHoaDon";
-            this.dgvHoaDon.ReadOnly = true;
             this.dgvHoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHoaDon.Size = new System.Drawing.Size(960, 320);
             this.dgvHoaDon.TabIndex = 0;
+            this.dgvHoaDon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellContentClick);
             // 
             // panelBottom
             // 

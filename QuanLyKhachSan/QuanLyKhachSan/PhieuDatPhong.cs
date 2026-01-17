@@ -24,9 +24,21 @@ namespace QuanLyKhachSan
             dgwPhongDaChon.CellValidating += DgwPhongDaChon_CellValidating;
             dgwPhongDaChon.CellEndEdit += DgwPhongDaChon_CellEndEdit;
             
+            // Thêm event handler để reload danh sách phòng khi thay đổi ngày
+            dtpNgayBD.ValueChanged += DateTimePicker_ValueChanged;
+            dtpNgayKT.ValueChanged += DateTimePicker_ValueChanged;
+            dtpGioBD.ValueChanged += DateTimePicker_ValueChanged;
+            dtpGioKT.ValueChanged += DateTimePicker_ValueChanged;
+            
             // Thêm keyboard shortcut để test database (Ctrl+T)
             this.KeyPreview = true;
             this.KeyDown += PhieuDatPhong_KeyDown;
+        }
+
+        private void DateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            // Reload danh sách phòng trống khi thay đổi ngày check-in/check-out
+            LoadDanhSachPhongTrong();
         }
 
         public PhieuDatPhong(string username) : this()
@@ -57,11 +69,24 @@ namespace QuanLyKhachSan
 
         private void LoadDanhSachPhongTrong()
         {
-            string sql = @"
+            // Lấy ngày check-in và check-out từ form
+            DateTime ngayBD = dtpNgayBD.Value.Date + dtpGioBD.Value.TimeOfDay;
+            DateTime ngayKT = dtpNgayKT.Value.Date + dtpGioKT.Value.TimeOfDay;
+
+            // Query lọc phòng trống và loại trừ phòng đã được đặt trong khoảng thời gian này
+            string sql = $@"
                 SELECT p.IDPhong, lp.TenLoaiPhong
                 FROM PHONG p
                 JOIN LOAIPHONG lp ON p.IDLoaiPhong = lp.IDLoaiPhong
-                WHERE p.TrangThai = N'Trống'";
+                WHERE p.TrangThai = N'Trống'
+                AND p.IDPhong NOT IN (
+                    SELECT ct.IDPhong 
+                    FROM CHITIET_PHIEUDATPHONG ct
+                    JOIN PHIEUDATPHONG pdp ON ct.IDPhieuDat = pdp.IDPhieuDat
+                    WHERE pdp.TrangThai NOT IN (N'Đã check-out', N'Đã hủy')
+                    AND NOT (ct.NgayKetThuc <= '{ngayBD:yyyy-MM-dd HH:mm:ss}' 
+                             OR ct.NgayBatDau >= '{ngayKT:yyyy-MM-dd HH:mm:ss}')
+                )";
 
             DataTable dtPhong = DataProvider.ThucThiTruyVan(sql);
 
@@ -159,8 +184,8 @@ namespace QuanLyKhachSan
                 else
                 {
                     string sqlInsertKH = $@"
-                        INSERT INTO KHACHHANG (HoTen, CCCD, SoDienThoai)
-                        VALUES (N'{txtHoTen.Text.Trim()}', '{txtCCCD.Text.Trim()}', '{txtSDT.Text.Trim()}')";
+                        INSERT INTO KHACHHANG (HoTen, CCCD, SoDienThoai,DiaChi)
+                        VALUES (N'{txtHoTen.Text.Trim()}', '{txtCCCD.Text.Trim()}', '{txtSDT.Text.Trim()}', '{txtDiaChi.Text.Trim()}')";
                     
                     int rowsAffected = DataProvider.ThucThiLenh(sqlInsertKH);
                     

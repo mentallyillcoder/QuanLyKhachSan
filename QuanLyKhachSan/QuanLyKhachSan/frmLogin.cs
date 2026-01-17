@@ -12,10 +12,50 @@ namespace QuanLyKhachSan
 {
     public partial class frmLogin : Form
     {
+        private bool dragging = false;
+        private Point dragCursorPoint;
+        private Point dragFormPoint;
+
         public frmLogin()
         {
             InitializeComponent();
             this.FormClosing += frmLogin_FormClosing;
+            
+            // Thêm sự kiện để kéo form
+            this.MouseDown += frmLogin_MouseDown;
+            this.MouseMove += frmLogin_MouseMove;
+            this.MouseUp += frmLogin_MouseUp;
+            
+            // Cho phép kéo form từ panelLeft
+            panelLeft.MouseDown += frmLogin_MouseDown;
+            panelLeft.MouseMove += frmLogin_MouseMove;
+            panelLeft.MouseUp += frmLogin_MouseUp;
+            
+            // Cho phép kéo form từ panelRight
+            panelRight.MouseDown += frmLogin_MouseDown;
+            panelRight.MouseMove += frmLogin_MouseMove;
+            panelRight.MouseUp += frmLogin_MouseUp;
+        }
+
+        private void frmLogin_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            dragCursorPoint = Cursor.Position;
+            dragFormPoint = this.Location;
+        }
+
+        private void frmLogin_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point diff = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
+                this.Location = Point.Add(dragFormPoint, new Size(diff));
+            }
+        }
+
+        private void frmLogin_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
         }
 
         private void frmLogin_Load(object sender, EventArgs e)
