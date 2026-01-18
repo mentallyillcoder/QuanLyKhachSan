@@ -18,13 +18,14 @@ BEGIN
         Username NVARCHAR(50) PRIMARY KEY,
         HoTen NVARCHAR(100) NOT NULL,
         Password NVARCHAR(50) NOT NULL,
-        LoaiTaiKhoan NVARCHAR(20) NOT NULL
+        LoaiTaiKhoan NVARCHAR(20) NOT NULL,
+        Email NVARCHAR(100)
     );
     
     -- Thêm tài khoản mặc định
     INSERT INTO TAIKHOAN VALUES 
-    ('admin', N'Quản trị viên', 'admin', N'Quản lý'),
-    ('letan01', N'Lễ tân 1', '123456', N'Nhân viên');
+    ('admin', N'Quản trị viên', 'admin', N'Quản lý','24520584@gm.uit.edu.vn'),
+    ('letan01', N'Lễ tân 1', '123456', N'Nhân viên','Buibabong2k6@gmail.com');
 END
 GO
 

@@ -32,7 +32,7 @@ namespace QuanLyKhachSan
         void LoadDanhSachTaiKhoan()
         {
 
-            string query = "SELECT Username, HoTen, LoaiTaiKhoan FROM TAIKHOAN";
+            string query = "SELECT Username, HoTen, Email, LoaiTaiKhoan FROM TAIKHOAN";
             DataTable dt = DataProvider.ThucThiTruyVan(query);
 
             dgvTaiKhoan.DataSource = dt;
@@ -41,6 +41,7 @@ namespace QuanLyKhachSan
             {
                 dgvTaiKhoan.Columns["Username"].HeaderText = "Tên Đăng Nhập";
                 dgvTaiKhoan.Columns["HoTen"].HeaderText = "Tên Hiển Thị";
+                dgvTaiKhoan.Columns["Email"].HeaderText = "Email";
                 dgvTaiKhoan.Columns["LoaiTaiKhoan"].HeaderText = "Loại Tài Khoản";
             }
         }
@@ -51,6 +52,7 @@ namespace QuanLyKhachSan
                 DataGridViewRow row = dgvTaiKhoan.Rows[e.RowIndex];
                 txtTenDangNhap.Text = row.Cells["Username"].Value.ToString();
                 txtTenHienThi.Text = row.Cells["HoTen"].Value.ToString();
+                txtEmail.Text = row.Cells["Email"].Value.ToString();
                 cboLoaiTK.Text = row.Cells["LoaiTaiKhoan"].Value.ToString();
 
                 txtMatKhau.Text = "";
@@ -62,6 +64,7 @@ namespace QuanLyKhachSan
             txtTenDangNhap.Text = "";
             txtTenHienThi.Text = "";
             txtMatKhau.Text = "";
+            txtEmail.Text = "";
             cboLoaiTK.SelectedIndex = 0;
             txtTenDangNhap.ReadOnly = false; 
             txtTenDangNhap.Focus();
@@ -71,7 +74,7 @@ namespace QuanLyKhachSan
             string tenDN = txtTenDangNhap.Text.Trim();
             string tenHT = txtTenHienThi.Text.Trim();
             string matKhau = txtMatKhau.Text.Trim();
-           
+            string email = txtEmail.Text.Trim();
             string loaiTK = cboLoaiTK.Text; 
 
             if (string.IsNullOrEmpty(tenDN) || string.IsNullOrEmpty(tenHT) || string.IsNullOrEmpty(matKhau))
@@ -87,9 +90,10 @@ namespace QuanLyKhachSan
                 {
                     MessageBox.Show("Tên đăng nhập này đã tồn tại!");
                     return;
-                }                
-                string query = $"INSERT INTO TAIKHOAN (Username, HoTen, Password, LoaiTaiKhoan) " +
-                               $"VALUES (N'{tenDN}', N'{tenHT}', N'{matKhau}', N'{loaiTK}')";
+                }
+                string query = $"INSERT INTO TAIKHOAN (Username, HoTen, Password, Email, LoaiTaiKhoan) " +
+                                $"VALUES (N'{tenDN}', N'{tenHT}', N'{matKhau}', N'{email}', N'{loaiTK}')";
+
                 DataProvider.ThucThiLenh(query);
                 MessageBox.Show("Thêm tài khoản mới thành công!");
                 LoadDanhSachTaiKhoan();
@@ -105,7 +109,7 @@ namespace QuanLyKhachSan
             string tenDN = txtTenDangNhap.Text;
             string tenHT = txtTenHienThi.Text.Trim();
             string matKhau = txtMatKhau.Text.Trim();
-           
+            string email = txtEmail.Text.Trim();
             string loaiTK = cboLoaiTK.Text;
 
             if (string.IsNullOrEmpty(tenDN))
@@ -118,14 +122,14 @@ namespace QuanLyKhachSan
                 string query = "";
                 if (string.IsNullOrEmpty(matKhau))
                 {
-                    
-                    query = $"UPDATE TAIKHOAN SET HoTen = N'{tenHT}', LoaiTaiKhoan = N'{loaiTK}' " +
-                            $"WHERE Username = N'{tenDN}'";
+
+                    query = $"UPDATE TAIKHOAN SET HoTen = N'{tenHT}', Email = N'{email}', LoaiTaiKhoan = N'{loaiTK}' " +
+                             $"WHERE Username = N'{tenDN}'";
                 }
                 else
                 {
-                   
-                    query = $"UPDATE TAIKHOAN SET HoTen = N'{tenHT}', Password = N'{matKhau}', LoaiTaiKhoan = N'{loaiTK}' " +
+
+                    query = $"UPDATE TAIKHOAN SET HoTen = N'{tenHT}', Password = N'{matKhau}', Email = N'{email}', LoaiTaiKhoan = N'{loaiTK}' " +
                             $"WHERE Username = N'{tenDN}'";
                 }
                 DataProvider.ThucThiLenh(query);
@@ -150,7 +154,7 @@ namespace QuanLyKhachSan
             if (MessageBox.Show("Bạn có chắc chắn muốn xóa tài khoản này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 try
-                {                    
+                {
                     string query = $"DELETE FROM TAIKHOAN WHERE Username = N'{tenDN}'";
                     DataProvider.ThucThiLenh(query);
 
@@ -163,6 +167,11 @@ namespace QuanLyKhachSan
                     MessageBox.Show("Lỗi khi xóa: " + ex.Message);
                 }
             }
+        }
+
+        private void lbTenHienThi_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
