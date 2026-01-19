@@ -84,9 +84,9 @@
             this.txtTimKiem.Size = new System.Drawing.Size(300, 25);
             this.txtTimKiem.TabIndex = 1;
             this.txtTimKiem.Text = "🔍 Tìm theo tên khách hàng";
+            this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
             this.txtTimKiem.Enter += new System.EventHandler(this.txtTimKiem_Enter);
             this.txtTimKiem.Leave += new System.EventHandler(this.txtTimKiem_Leave);
-            this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
             // 
             // lblTitle
             // 
@@ -95,7 +95,7 @@
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
             this.lblTitle.Location = new System.Drawing.Point(18, 20);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(118, 30);
+            this.lblTitle.Size = new System.Drawing.Size(123, 30);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Đặt Phòng";
             // 

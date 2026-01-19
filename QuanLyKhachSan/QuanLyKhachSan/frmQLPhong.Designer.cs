@@ -100,6 +100,8 @@ namespace QuanLyKhachSan
             // 
             this.dgvPhong.AllowUserToAddRows = false;
             this.dgvPhong.AllowUserToDeleteRows = false;
+            this.dgvPhong.AllowUserToResizeColumns = false;
+            this.dgvPhong.AllowUserToResizeRows = false;
             this.dgvPhong.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPhong.BackgroundColor = System.Drawing.Color.White;
             this.dgvPhong.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -108,6 +110,7 @@ namespace QuanLyKhachSan
             this.dgvPhong.Location = new System.Drawing.Point(20, 20);
             this.dgvPhong.Name = "dgvPhong";
             this.dgvPhong.ReadOnly = true;
+            this.dgvPhong.RowHeadersVisible = false;
             this.dgvPhong.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPhong.Size = new System.Drawing.Size(960, 300);
             this.dgvPhong.TabIndex = 0;

@@ -95,8 +95,9 @@ namespace QuanLyKhachSan
             this.panelSidebar.Controls.Add(this.pbLogo);
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 0);
+            this.panelSidebar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(250, 700);
+            this.panelSidebar.Size = new System.Drawing.Size(333, 862);
             this.panelSidebar.TabIndex = 0;
             this.panelSidebar.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSidebar_Paint);
             // 
@@ -104,9 +105,10 @@ namespace QuanLyKhachSan
             // 
             this.lbChaoUser.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Italic);
             this.lbChaoUser.ForeColor = System.Drawing.Color.White;
-            this.lbChaoUser.Location = new System.Drawing.Point(10, 640);
+            this.lbChaoUser.Location = new System.Drawing.Point(13, 788);
+            this.lbChaoUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbChaoUser.Name = "lbChaoUser";
-            this.lbChaoUser.Size = new System.Drawing.Size(230, 40);
+            this.lbChaoUser.Size = new System.Drawing.Size(307, 49);
             this.lbChaoUser.TabIndex = 7;
             this.lbChaoUser.Text = "Chào user";
             this.lbChaoUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -119,9 +121,10 @@ namespace QuanLyKhachSan
             this.btnDangXuat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDangXuat.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnDangXuat.ForeColor = System.Drawing.Color.White;
-            this.btnDangXuat.Location = new System.Drawing.Point(20, 580);
+            this.btnDangXuat.Location = new System.Drawing.Point(27, 714);
+            this.btnDangXuat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDangXuat.Name = "btnDangXuat";
-            this.btnDangXuat.Size = new System.Drawing.Size(210, 50);
+            this.btnDangXuat.Size = new System.Drawing.Size(280, 62);
             this.btnDangXuat.TabIndex = 6;
             this.btnDangXuat.Text = "Đăng xuất";
             this.btnDangXuat.UseVisualStyleBackColor = false;
@@ -135,9 +138,10 @@ namespace QuanLyKhachSan
             this.btnQLTaiKhoan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQLTaiKhoan.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnQLTaiKhoan.ForeColor = System.Drawing.Color.White;
-            this.btnQLTaiKhoan.Location = new System.Drawing.Point(20, 510);
+            this.btnQLTaiKhoan.Location = new System.Drawing.Point(27, 550);
+            this.btnQLTaiKhoan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnQLTaiKhoan.Name = "btnQLTaiKhoan";
-            this.btnQLTaiKhoan.Size = new System.Drawing.Size(210, 50);
+            this.btnQLTaiKhoan.Size = new System.Drawing.Size(280, 62);
             this.btnQLTaiKhoan.TabIndex = 5;
             this.btnQLTaiKhoan.Text = "QL Tài khoản";
             this.btnQLTaiKhoan.UseVisualStyleBackColor = false;
@@ -151,9 +155,10 @@ namespace QuanLyKhachSan
             this.btnBaoCao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBaoCao.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnBaoCao.ForeColor = System.Drawing.Color.White;
-            this.btnBaoCao.Location = new System.Drawing.Point(20, 450);
+            this.btnBaoCao.Location = new System.Drawing.Point(27, 620);
+            this.btnBaoCao.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBaoCao.Name = "btnBaoCao";
-            this.btnBaoCao.Size = new System.Drawing.Size(210, 50);
+            this.btnBaoCao.Size = new System.Drawing.Size(280, 62);
             this.btnBaoCao.TabIndex = 4;
             this.btnBaoCao.Text = "Báo cáo";
             this.btnBaoCao.UseVisualStyleBackColor = false;
@@ -167,9 +172,10 @@ namespace QuanLyKhachSan
             this.btnQLDichVu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQLDichVu.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnQLDichVu.ForeColor = System.Drawing.Color.White;
-            this.btnQLDichVu.Location = new System.Drawing.Point(20, 390);
+            this.btnQLDichVu.Location = new System.Drawing.Point(27, 480);
+            this.btnQLDichVu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnQLDichVu.Name = "btnQLDichVu";
-            this.btnQLDichVu.Size = new System.Drawing.Size(210, 50);
+            this.btnQLDichVu.Size = new System.Drawing.Size(280, 62);
             this.btnQLDichVu.TabIndex = 3;
             this.btnQLDichVu.Text = "QL Dịch vụ";
             this.btnQLDichVu.UseVisualStyleBackColor = false;
@@ -183,29 +189,14 @@ namespace QuanLyKhachSan
             this.btnQLPhong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQLPhong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnQLPhong.ForeColor = System.Drawing.Color.White;
-            this.btnQLPhong.Location = new System.Drawing.Point(20, 330);
+            this.btnQLPhong.Location = new System.Drawing.Point(27, 406);
+            this.btnQLPhong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnQLPhong.Name = "btnQLPhong";
-            this.btnQLPhong.Size = new System.Drawing.Size(210, 50);
+            this.btnQLPhong.Size = new System.Drawing.Size(280, 62);
             this.btnQLPhong.TabIndex = 2;
             this.btnQLPhong.Text = "QL Phòng";
             this.btnQLPhong.UseVisualStyleBackColor = false;
             this.btnQLPhong.Click += new System.EventHandler(this.btnQLPhong_Click);
-            // 
-            // btnSoDo
-            // 
-            this.btnSoDo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.btnSoDo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSoDo.FlatAppearance.BorderSize = 0;
-            this.btnSoDo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSoDo.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnSoDo.ForeColor = System.Drawing.Color.White;
-            this.btnSoDo.Location = new System.Drawing.Point(20, 210);
-            this.btnSoDo.Name = "btnSoDo";
-            this.btnSoDo.Size = new System.Drawing.Size(210, 50);
-            this.btnSoDo.TabIndex = 1;
-            this.btnSoDo.Text = "Sơ đồ phòng";
-            this.btnSoDo.UseVisualStyleBackColor = false;
-            this.btnSoDo.Click += new System.EventHandler(this.btnSoDo_Click);
             // 
             // btnQLDatPhong
             // 
@@ -215,19 +206,38 @@ namespace QuanLyKhachSan
             this.btnQLDatPhong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQLDatPhong.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnQLDatPhong.ForeColor = System.Drawing.Color.White;
-            this.btnQLDatPhong.Location = new System.Drawing.Point(20, 270);
+            this.btnQLDatPhong.Location = new System.Drawing.Point(27, 332);
+            this.btnQLDatPhong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnQLDatPhong.Name = "btnQLDatPhong";
-            this.btnQLDatPhong.Size = new System.Drawing.Size(210, 50);
+            this.btnQLDatPhong.Size = new System.Drawing.Size(280, 62);
             this.btnQLDatPhong.TabIndex = 8;
             this.btnQLDatPhong.Text = "QL Đặt phòng";
             this.btnQLDatPhong.UseVisualStyleBackColor = false;
             this.btnQLDatPhong.Click += new System.EventHandler(this.btnQLDatPhong_Click);
-            
+            // 
+            // btnSoDo
+            // 
+            this.btnSoDo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.btnSoDo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSoDo.FlatAppearance.BorderSize = 0;
+            this.btnSoDo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSoDo.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnSoDo.ForeColor = System.Drawing.Color.White;
+            this.btnSoDo.Location = new System.Drawing.Point(27, 258);
+            this.btnSoDo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSoDo.Name = "btnSoDo";
+            this.btnSoDo.Size = new System.Drawing.Size(280, 62);
+            this.btnSoDo.TabIndex = 1;
+            this.btnSoDo.Text = "Sơ đồ phòng";
+            this.btnSoDo.UseVisualStyleBackColor = false;
+            this.btnSoDo.Click += new System.EventHandler(this.btnSoDo_Click);
+            // 
             // pbLogo
             // 
-            this.pbLogo.Location = new System.Drawing.Point(50, 30);
+            this.pbLogo.Location = new System.Drawing.Point(67, 37);
+            this.pbLogo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbLogo.Name = "pbLogo";
-            this.pbLogo.Size = new System.Drawing.Size(150, 150);
+            this.pbLogo.Size = new System.Drawing.Size(200, 185);
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbLogo.TabIndex = 0;
             this.pbLogo.TabStop = false;
@@ -237,9 +247,10 @@ namespace QuanLyKhachSan
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
             this.panelTop.Controls.Add(this.lbTieuDe);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(250, 0);
+            this.panelTop.Location = new System.Drawing.Point(333, 0);
+            this.panelTop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1050, 60);
+            this.panelTop.Size = new System.Drawing.Size(1400, 74);
             this.panelTop.TabIndex = 1;
             // 
             // lbTieuDe
@@ -248,8 +259,9 @@ namespace QuanLyKhachSan
             this.lbTieuDe.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lbTieuDe.ForeColor = System.Drawing.Color.White;
             this.lbTieuDe.Location = new System.Drawing.Point(0, 0);
+            this.lbTieuDe.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbTieuDe.Name = "lbTieuDe";
-            this.lbTieuDe.Size = new System.Drawing.Size(1050, 60);
+            this.lbTieuDe.Size = new System.Drawing.Size(1400, 74);
             this.lbTieuDe.TabIndex = 0;
             this.lbTieuDe.Text = "SƠ ĐỒ PHÒNG";
             this.lbTieuDe.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -264,10 +276,11 @@ namespace QuanLyKhachSan
             this.panelFilter.Controls.Add(this.cboLoaiPhong);
             this.panelFilter.Controls.Add(this.lbLoaiPhong);
             this.panelFilter.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelFilter.Location = new System.Drawing.Point(250, 60);
+            this.panelFilter.Location = new System.Drawing.Point(333, 74);
+            this.panelFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelFilter.Name = "panelFilter";
-            this.panelFilter.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelFilter.Size = new System.Drawing.Size(1050, 70);
+            this.panelFilter.Padding = new System.Windows.Forms.Padding(27, 18, 27, 18);
+            this.panelFilter.Size = new System.Drawing.Size(1400, 86);
             this.panelFilter.TabIndex = 3;
             // 
             // cboLoaiGiuong
@@ -275,9 +288,10 @@ namespace QuanLyKhachSan
             this.cboLoaiGiuong.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLoaiGiuong.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboLoaiGiuong.FormattingEnabled = true;
-            this.cboLoaiGiuong.Location = new System.Drawing.Point(800, 25);
+            this.cboLoaiGiuong.Location = new System.Drawing.Point(1067, 31);
+            this.cboLoaiGiuong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboLoaiGiuong.Name = "cboLoaiGiuong";
-            this.cboLoaiGiuong.Size = new System.Drawing.Size(200, 25);
+            this.cboLoaiGiuong.Size = new System.Drawing.Size(265, 31);
             this.cboLoaiGiuong.TabIndex = 5;
             this.cboLoaiGiuong.SelectedIndexChanged += new System.EventHandler(this.cboFilter_SelectedIndexChanged);
             // 
@@ -286,9 +300,10 @@ namespace QuanLyKhachSan
             this.lbLoaiGiuong.AutoSize = true;
             this.lbLoaiGiuong.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lbLoaiGiuong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lbLoaiGiuong.Location = new System.Drawing.Point(690, 28);
+            this.lbLoaiGiuong.Location = new System.Drawing.Point(920, 34);
+            this.lbLoaiGiuong.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbLoaiGiuong.Name = "lbLoaiGiuong";
-            this.lbLoaiGiuong.Size = new System.Drawing.Size(93, 19);
+            this.lbLoaiGiuong.Size = new System.Drawing.Size(112, 23);
             this.lbLoaiGiuong.TabIndex = 4;
             this.lbLoaiGiuong.Text = "Loại giường:";
             // 
@@ -297,9 +312,10 @@ namespace QuanLyKhachSan
             this.cboTrangThai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTrangThai.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboTrangThai.FormattingEnabled = true;
-            this.cboTrangThai.Location = new System.Drawing.Point(450, 25);
+            this.cboTrangThai.Location = new System.Drawing.Point(600, 31);
+            this.cboTrangThai.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboTrangThai.Name = "cboTrangThai";
-            this.cboTrangThai.Size = new System.Drawing.Size(200, 25);
+            this.cboTrangThai.Size = new System.Drawing.Size(265, 31);
             this.cboTrangThai.TabIndex = 3;
             this.cboTrangThai.SelectedIndexChanged += new System.EventHandler(this.cboFilter_SelectedIndexChanged);
             // 
@@ -308,9 +324,10 @@ namespace QuanLyKhachSan
             this.lbTrangThai.AutoSize = true;
             this.lbTrangThai.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lbTrangThai.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lbTrangThai.Location = new System.Drawing.Point(360, 28);
+            this.lbTrangThai.Location = new System.Drawing.Point(480, 34);
+            this.lbTrangThai.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbTrangThai.Name = "lbTrangThai";
-            this.lbTrangThai.Size = new System.Drawing.Size(80, 19);
+            this.lbTrangThai.Size = new System.Drawing.Size(97, 23);
             this.lbTrangThai.TabIndex = 2;
             this.lbTrangThai.Text = "Trạng thái:";
             // 
@@ -319,9 +336,10 @@ namespace QuanLyKhachSan
             this.cboLoaiPhong.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLoaiPhong.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboLoaiPhong.FormattingEnabled = true;
-            this.cboLoaiPhong.Location = new System.Drawing.Point(120, 25);
+            this.cboLoaiPhong.Location = new System.Drawing.Point(160, 31);
+            this.cboLoaiPhong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboLoaiPhong.Name = "cboLoaiPhong";
-            this.cboLoaiPhong.Size = new System.Drawing.Size(200, 25);
+            this.cboLoaiPhong.Size = new System.Drawing.Size(265, 31);
             this.cboLoaiPhong.TabIndex = 1;
             this.cboLoaiPhong.SelectedIndexChanged += new System.EventHandler(this.cboFilter_SelectedIndexChanged);
             // 
@@ -330,9 +348,10 @@ namespace QuanLyKhachSan
             this.lbLoaiPhong.AutoSize = true;
             this.lbLoaiPhong.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lbLoaiPhong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
-            this.lbLoaiPhong.Location = new System.Drawing.Point(20, 28);
+            this.lbLoaiPhong.Location = new System.Drawing.Point(27, 34);
+            this.lbLoaiPhong.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbLoaiPhong.Name = "lbLoaiPhong";
-            this.lbLoaiPhong.Size = new System.Drawing.Size(88, 19);
+            this.lbLoaiPhong.Size = new System.Drawing.Size(105, 23);
             this.lbLoaiPhong.TabIndex = 0;
             this.lbLoaiPhong.Text = "Loại phòng:";
             // 
@@ -341,10 +360,11 @@ namespace QuanLyKhachSan
             this.panelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(240)))), ((int)(((byte)(241)))));
             this.panelMain.Controls.Add(this.flpRoomLayout);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(250, 130);
+            this.panelMain.Location = new System.Drawing.Point(333, 160);
+            this.panelMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Padding = new System.Windows.Forms.Padding(20);
-            this.panelMain.Size = new System.Drawing.Size(1050, 570);
+            this.panelMain.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
+            this.panelMain.Size = new System.Drawing.Size(1400, 702);
             this.panelMain.TabIndex = 2;
             // 
             // flpRoomLayout
@@ -352,14 +372,16 @@ namespace QuanLyKhachSan
             this.flpRoomLayout.AutoScroll = true;
             this.flpRoomLayout.BackColor = System.Drawing.Color.White;
             this.flpRoomLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpRoomLayout.Location = new System.Drawing.Point(20, 20);
+            this.flpRoomLayout.Location = new System.Drawing.Point(27, 25);
+            this.flpRoomLayout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.flpRoomLayout.Name = "flpRoomLayout";
-            this.flpRoomLayout.Padding = new System.Windows.Forms.Padding(20);
-            this.flpRoomLayout.Size = new System.Drawing.Size(1010, 530);
+            this.flpRoomLayout.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
+            this.flpRoomLayout.Size = new System.Drawing.Size(1346, 652);
             this.flpRoomLayout.TabIndex = 0;
             // 
             // contextMenuPhong
             // 
+            this.contextMenuPhong.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuPhong.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.itemCheckIn,
             this.itemThanhToan,
@@ -367,53 +389,54 @@ namespace QuanLyKhachSan
             this.itemChuyenPhong,
             this.itemDaDonXong});
             this.contextMenuPhong.Name = "contextMenuPhong";
-            this.contextMenuPhong.Size = new System.Drawing.Size(193, 114);
+            this.contextMenuPhong.Size = new System.Drawing.Size(227, 124);
             this.contextMenuPhong.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuPhong_Opening);
             // 
             // itemCheckIn
             // 
             this.itemCheckIn.Name = "itemCheckIn";
-            this.itemCheckIn.Size = new System.Drawing.Size(192, 22);
+            this.itemCheckIn.Size = new System.Drawing.Size(226, 24);
             this.itemCheckIn.Text = "Check-in";
             this.itemCheckIn.Click += new System.EventHandler(this.itemCheckIn_Click);
             // 
             // itemThanhToan
             // 
             this.itemThanhToan.Name = "itemThanhToan";
-            this.itemThanhToan.Size = new System.Drawing.Size(192, 22);
+            this.itemThanhToan.Size = new System.Drawing.Size(226, 24);
             this.itemThanhToan.Text = "Thanh toán";
             this.itemThanhToan.Click += new System.EventHandler(this.itemThanhToan_Click);
             // 
             // itemThemDichVu
             // 
             this.itemThemDichVu.Name = "itemThemDichVu";
-            this.itemThemDichVu.Size = new System.Drawing.Size(192, 22);
+            this.itemThemDichVu.Size = new System.Drawing.Size(226, 24);
             this.itemThemDichVu.Text = "Thêm dịch vụ";
             this.itemThemDichVu.Click += new System.EventHandler(this.itemThemDichVu_Click);
             // 
             // itemChuyenPhong
             // 
             this.itemChuyenPhong.Name = "itemChuyenPhong";
-            this.itemChuyenPhong.Size = new System.Drawing.Size(192, 22);
+            this.itemChuyenPhong.Size = new System.Drawing.Size(226, 24);
             this.itemChuyenPhong.Text = "Chuyển phòng";
             this.itemChuyenPhong.Click += new System.EventHandler(this.itemChuyenPhong_Click);
             // 
             // itemDaDonXong
             // 
             this.itemDaDonXong.Name = "itemDaDonXong";
-            this.itemDaDonXong.Size = new System.Drawing.Size(192, 22);
+            this.itemDaDonXong.Size = new System.Drawing.Size(226, 24);
             this.itemDaDonXong.Text = "Xác nhận đã dọn xong";
             this.itemDaDonXong.Click += new System.EventHandler(this.itemDaDonXong_Click);
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1300, 700);
+            this.ClientSize = new System.Drawing.Size(1733, 862);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelFilter);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelSidebar);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản Lý Khách Sạn";

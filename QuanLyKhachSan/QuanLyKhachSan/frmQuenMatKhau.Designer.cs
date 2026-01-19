@@ -14,7 +14,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtUsername = new System.Windows.Forms.TextBox(); // Đã đổi tên từ txtEmail
+            this.txtEmail = new System.Windows.Forms.TextBox();
             this.lbKetQua = new System.Windows.Forms.Label();
             this.btnLayLaiMK = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -40,15 +40,15 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(145, 19);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Nhập Tên đăng nhập:"; // Đã sửa text
+            this.label2.Text = "Nhập Email đăng ký:";
             // 
-            // txtUsername
+            // txtEmail
             // 
-            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtUsername.Location = new System.Drawing.Point(49, 115);
-            this.txtUsername.Name = "txtUsername"; // Đã đổi tên biến
-            this.txtUsername.Size = new System.Drawing.Size(347, 27);
-            this.txtUsername.TabIndex = 2;
+            this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtEmail.Location = new System.Drawing.Point(49, 115);
+            this.txtEmail.Name = "txtEmail"; // Đã đổi tên Control
+            this.txtEmail.Size = new System.Drawing.Size(347, 27);
+            this.txtEmail.TabIndex = 2;
             // 
             // btnLayLaiMK
             // 
@@ -82,7 +82,7 @@
             this.ClientSize = new System.Drawing.Size(450, 280);
             this.Controls.Add(this.lbKetQua);
             this.Controls.Add(this.btnLayLaiMK);
-            this.Controls.Add(this.txtUsername);
+            this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
@@ -96,7 +96,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtUsername; // Biến này quan trọng
+       private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label lbKetQua;
         private System.Windows.Forms.Button btnLayLaiMK;
         private System.Windows.Forms.PictureBox pictureBox1;

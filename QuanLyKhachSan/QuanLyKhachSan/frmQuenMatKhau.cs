@@ -17,44 +17,40 @@ namespace QuanLyKhachSan
 
         private void btnLayLaiMK_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
+            // Lấy Email người dùng nhập vào
+            string emailInput = txtEmail.Text.Trim();
 
-            if (username == "")
+            if (emailInput == "")
             {
-                ShowMessage("Vui lòng nhập Tên đăng nhập!", Color.Red);
+                ShowMessage("Vui lòng nhập Email đã đăng ký!", Color.Red);
                 return;
             }
 
-            // 1. Truy vấn Database theo Username để lấy Email và Password
-            // Chúng ta cần lấy cả Password (để gửi) và Email (để biết gửi đi đâu)
-            string query = $"SELECT Password, Email FROM TAIKHOAN WHERE Username = '{username}'";
+            // 1. Truy vấn Database theo EMAIL
+            // Chúng ta lấy thêm cột Username và HoTen để gửi thông tin đầy đủ cho người dùng
+            string query = $"SELECT Username, Password, HoTen FROM TAIKHOAN WHERE Email = '{emailInput}'";
             DataTable result = DataProvider.ThucThiTruyVan(query);
 
             if (result.Rows.Count > 0)
             {
+                // Lấy dữ liệu từ dòng đầu tiên tìm thấy
                 DataRow row = result.Rows[0];
+                string username = row["Username"].ToString();
                 string matKhau = row["Password"].ToString();
-                string emailNhan = row["Email"].ToString();
-
-                // Kiểm tra xem tài khoản này có Email trong database không
-                if (string.IsNullOrEmpty(emailNhan))
-                {
-                    ShowMessage("Tài khoản này chưa đăng ký Email bảo mật!", Color.Red);
-                    return;
-                }
+                string hoTen = row["HoTen"].ToString();
 
                 // 2. Tiến hành gửi Email
                 try
                 {
+                    // Hiệu ứng chờ
                     Cursor.Current = Cursors.WaitCursor;
                     btnLayLaiMK.Enabled = false;
                     btnLayLaiMK.Text = "Đang gửi...";
 
-                    GuiEmail(emailNhan, matKhau);
+                    // Gọi hàm gửi mail với đầy đủ thông tin
+                    GuiEmail(emailInput, username, hoTen, matKhau);
 
-                    // Che bớt email để bảo mật (Ví dụ: a*****@gmail.com)
-                    string maskedEmail = MaskEmail(emailNhan);
-                    ShowMessage($"Mật khẩu đã được gửi đến: {maskedEmail}", Color.Green);
+                    ShowMessage($"Đã gửi thông tin tài khoản vào email: {emailInput}", Color.Green);
                 }
                 catch (Exception ex)
                 {
@@ -62,6 +58,7 @@ namespace QuanLyKhachSan
                 }
                 finally
                 {
+                    // Trả lại trạng thái bình thường
                     Cursor.Current = Cursors.Default;
                     btnLayLaiMK.Enabled = true;
                     btnLayLaiMK.Text = "GỬI MẬT KHẨU";
@@ -69,40 +66,53 @@ namespace QuanLyKhachSan
             }
             else
             {
-                ShowMessage("Tên đăng nhập không tồn tại!", Color.Red);
+                ShowMessage("Email này chưa được đăng ký trong hệ thống!", Color.Red);
             }
         }
 
-        private void GuiEmail(string emailNhan, string matKhau)
+        private void GuiEmail(string emailNhan, string username, string hoTen, string matKhau)
         {
+            // --- THÔNG TIN GMAIL CỦA BẠN ---
             string fromEmail = "24520584@gm.uit.edu.vn";
-            string password = "tuty uddg ylvf gpsa";
+            string password = "tuty uddg ylvf gpsa"; // Mật khẩu ứng dụng bạn đã cung cấp
+            // -------------------------------
 
             MailMessage mail = new MailMessage();
-            mail.From = new MailAddress(fromEmail);
-            mail.To.Add(emailNhan);
-            mail.Subject = "Cấp lại mật khẩu - Hệ thống Quản lý Khách sạn";
 
+            // Trim() để xóa khoảng trắng thừa tránh lỗi Header
+            mail.From = new MailAddress(fromEmail.Trim());
+            mail.To.Add(emailNhan.Trim());
+
+            // Cấu hình UTF-8 để không lỗi font tiếng Việt
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.Subject = "Khôi phục thông tin tài khoản - Hệ thống Quản lý Khách sạn";
+
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
+            mail.IsBodyHtml = true;
+
+            // Nội dung thư mới: Gửi cả Username và Password
             mail.Body = $@"
                 <html>
-                <body>
-                    <h2>Xin chào {txtUsername.Text},</h2>
-                    <p>Hệ thống nhận được yêu cầu lấy lại mật khẩu cho tài khoản: <b>{txtUsername.Text}</b>.</p>
-                    <p>Mật khẩu hiện tại của bạn là: <b style='color:red; font-size: 16px;'>{matKhau}</b></p>
-                    <p>Nếu bạn không thực hiện yêu cầu này, vui lòng liên hệ quản trị viên ngay lập tức.</p>
+                <body style='font-family: Arial, sans-serif;'>
+                    <h2 style='color: #2980b9;'>Xin chào {hoTen},</h2>
+                    <p>Hệ thống nhận được yêu cầu lấy lại mật khẩu từ Email: <b>{emailNhan}</b>.</p>
+                    <p>Dưới đây là thông tin đăng nhập của bạn:</p>
+                    <div style='background-color: #f1f1f1; padding: 15px; border-radius: 5px; display: inline-block;'>
+                        <p>👤 Tên đăng nhập: <b>{username}</b></p>
+                        <p>🔒 Mật khẩu: <b style='color:red; font-size: 16px;'>{matKhau}</b></p>
+                    </div>
+                    <p>Vui lòng đăng nhập.</p>
                     <br>
                     <p>Trân trọng,</p>
-                    <p>Admin Team</p>
+                    <p><b>Ban Quản Trị Khách Sạn</b></p>
                 </body>
                 </html>";
-
-            mail.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.EnableSsl = true;
             smtp.Port = 587;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Credentials = new NetworkCredential(fromEmail, password);
+            smtp.Credentials = new NetworkCredential(fromEmail.Trim(), password.Trim());
 
             smtp.Send(mail);
         }

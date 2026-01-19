@@ -96,6 +96,8 @@ namespace QuanLyKhachSan
             // 
             this.dgvDichVu.AllowUserToAddRows = false;
             this.dgvDichVu.AllowUserToDeleteRows = false;
+            this.dgvDichVu.AllowUserToResizeColumns = false;
+            this.dgvDichVu.AllowUserToResizeRows = false;
             this.dgvDichVu.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDichVu.BackgroundColor = System.Drawing.Color.White;
             this.dgvDichVu.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -104,6 +106,7 @@ namespace QuanLyKhachSan
             this.dgvDichVu.Location = new System.Drawing.Point(20, 20);
             this.dgvDichVu.Name = "dgvDichVu";
             this.dgvDichVu.ReadOnly = true;
+            this.dgvDichVu.RowHeadersVisible = false;
             this.dgvDichVu.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDichVu.Size = new System.Drawing.Size(960, 300);
             this.dgvDichVu.TabIndex = 0;

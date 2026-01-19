@@ -94,6 +94,13 @@ namespace QuanLyKhachSan
             RoundButton(btnThoat, 20);
             RoundPanel(panelUsername, 10);
             RoundPanel(panelPassword, 10);
+
+            txtUsername.Text = "Tên đăng nhập";
+            txtUsername.ForeColor = Color.Silver;
+
+            txtPassword.Text = "Mật khẩu";
+            txtPassword.ForeColor = Color.Silver;
+            txtPassword.UseSystemPasswordChar = false;
         }
 
         private void RoundButton(Button btn, int radius)
@@ -162,14 +169,15 @@ namespace QuanLyKhachSan
 
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
-            
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+
+            if (string.IsNullOrEmpty(username) || username == "Tên đăng nhập" ||
+        string.IsNullOrEmpty(password) || password == "Mật khẩu")
             {
                 ShowError("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!");
                 return;
-            }           
-            
-            string query = $"SELECT * FROM TAIKHOAN WHERE Username = N'{username}' AND Password = N'{password}'or 1=1";
+            }
+
+            string query = $"SELECT * FROM TAIKHOAN WHERE Username = N'{username}' AND Password = N'{password}'";
             DataTable result = DataProvider.ThucThiTruyVan(query);   
             if (result.Rows.Count > 0)
             {
@@ -282,6 +290,43 @@ namespace QuanLyKhachSan
         {
             frmQuenMatKhau f = new frmQuenMatKhau();
             f.ShowDialog();
+        }
+        private void txtUsername_Enter(object sender, EventArgs e)
+        {
+            if (txtUsername.Text == "Tên đăng nhập")
+            {
+                txtUsername.Text = "";
+                txtUsername.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtUsername_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtUsername.Text))
+            {
+                txtUsername.Text = "Tên đăng nhập";
+                txtUsername.ForeColor = Color.Silver;
+            }
+        }
+
+        private void txtPassword_Enter(object sender, EventArgs e)
+        {
+            if (txtPassword.Text == "Mật khẩu")
+            {
+                txtPassword.Text = "";
+                txtPassword.ForeColor = Color.Black;
+                txtPassword.UseSystemPasswordChar = true; // Bắt đầu ẩn mật khẩu khi gõ
+            }
+        }
+
+        private void txtPassword_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtPassword.Text))
+            {
+                txtPassword.Text = "Mật khẩu";
+                txtPassword.ForeColor = Color.Silver;
+                txtPassword.UseSystemPasswordChar = false; // Hiện lại chữ "Mật khẩu"
+            }
         }
     }
 }
